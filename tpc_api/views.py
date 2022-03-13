@@ -98,7 +98,27 @@ def addExperience(request):
 
 @api_view(['POST'])
 def addPlacementDetails(request):
-    pass
+    roll_no = request.data['roll_no']
+    offer_letter_one = request.FILES['offer_letter_one']
+    offer_letter_two = request.FILES['offer_letter_two']
+    placed_org_one = request.data['placed_org_one']
+    placed_org_two = request.data['placed_org_two']
+    package_one = request.data['package_one']
+    package_two = request.data['package_two']
+
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+    except Exception as e:
+        return Response({'status': 'error', 'error_msg': str(e)})
+
+    try:
+        PlacementDetails.objects.get(student=student).delete()
+    except:
+        pass
+
+    PlacementDetails.objects.create( student = student, offer_letter_one = offer_letter_one, offer_letter_two = offer_letter_two,
+         placed_org_one = placed_org_one, placed_org_two=placed_org_two, package_one= package_one, package_two= package_two)
+    return Response({'status': 'success'})
 
 
 @api_view(['POST'])
