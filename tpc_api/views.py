@@ -71,7 +71,29 @@ def addSkillSet(request):
 
 @api_view(['POST'])
 def addExperience(request):
-    pass
+    roll_no = request.data['roll_no']
+    internship_one = request.data['internship_one']
+    internship_two = request.data['internship_two']
+    internship_three = request.data['internship_three']
+    project_one = request.data['project_one']
+    project_two = request.data['project_two']
+    project_three = request.data['project_three']
+    pref_lang = request.data['pref_lang']
+    technologies = request.data['technologies']
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+    except Exception as e:
+        return Response({'status': 'error', 'error_msg': str(e)})
+    try:
+        Experience.objects.get(student=student).delete()
+    except:
+        pass
+
+    Experience.objects.create(student=student, internship_one=internship_one, internship_two=internship_two, internship_three=internship_three, project_one=project_one, project_two=project_two,
+                                project_three=project_three, pref_lang=pref_lang, technologies=technologies
+                                )
+    return Response({'status': 'success'})
+    
 
 
 @api_view(['POST'])
