@@ -81,7 +81,7 @@ def addSkillSet(request):
     except Exception as e:
         return Response({'status': 'error', 'error_msg': str(e)})
     try:
-        Experience.objects.get(student=student).delete()
+        SkillSet.objects.get(student=student).delete()
     except:
         pass
 
