@@ -66,7 +66,31 @@ def addAcademicInfo(request):
 
 @api_view(['POST'])
 def addSkillSet(request):
-    pass
+    roll_no = request.data['roll_no']
+    certificate_one = request.FILES['certificate_one']
+    certificate_two = request.FILES['certificate_two']
+    certificate_three = request.FILES['certificate_three']
+    certificate_four = request.FILES['certificate_four']
+    acad_achievement_one = request.data['acad_achievement_one']
+    acad_achievement_two = request.data['acad_achievement_two']
+    acad_achievement_three =request.data['acad_achievement_three']
+    acad_achievement_four =request.data['acad_achievement_four']
+    career_obj = request.data['career_obj']
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+    except Exception as e:
+        return Response({'status': 'error', 'error_msg': str(e)})
+    try:
+        Experience.objects.get(student=student).delete()
+    except:
+        pass
+
+    SkillSet.objects.create(student=student, certificate_one = certificate_one,career_obj = career_obj,
+                            certificate_two = certificate_two,certificate_three = certificate_three,
+                            certificate_four=certificate_four,acad_achievement_four=acad_achievement_four,
+                            acad_achievement_one=acad_achievement_one , acad_achievement_two = acad_achievement_two,acad_achievement_three= acad_achievement_three
+                                )
+    return Response({'status': 'success'})
 
 
 @api_view(['POST'])
