@@ -259,7 +259,7 @@ def addOtherInfo(request):
         context = {'status': 'Other Info Updated'}
     except:
         OtherInfo.objects.create(student=student, hobbies=hobbies,
-                                 pos_of_res_one=pos_of_res_one, pos_of_res_two=pos_of_res_two, pos_of_res_three=pos_of_res_three, pos_of_res_four=pos_of_res_four, extracuricular_one=extracuricular_one, extracuricular_two=extracuricular_two, extractcurricular_three=extracuricular_three)
+                                 pos_of_res_one=pos_of_res_one, pos_of_res_two=pos_of_res_two, pos_of_res_three=pos_of_res_three, pos_of_res_four=pos_of_res_four, extracuricular_one=extracuricular_one, extracuricular_two=extracuricular_two, extracuricular_three=extracuricular_three)
         context = {'status': 'Other Info Added'}
     finally:
         return Response(context)
