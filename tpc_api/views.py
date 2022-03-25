@@ -1,3 +1,5 @@
+import requests
+import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import *
@@ -55,9 +57,8 @@ def addStudent(request):
                      'github', 'linkedin', 'no_of_offers', 'password', 'photo', 'department', 'batch', 'rait_email'])
         context = {'status': 'Student Record Updated'}
     except:
-        Student.objects.create(
-            roll_no=roll_no, first_name=first_name, middle_name=middle_name, last_name=last_name, email=email, phone_number=phone_number, gender=gender, github=github, linkedin=linkedin, no_of_offers=no_of_offers, password=password, photo=photo, department=department, batch=batch, rait_email=rait_email
-        )
+        Student.objects.create(roll_no=roll_no, first_name=first_name, middle_name=middle_name, last_name=last_name, email=email, phone_number=phone_number, gender=gender,
+                               github=github, linkedin=linkedin, no_of_offers=no_of_offers, password=password, photo=photo, department=department, batch=batch, rait_email=rait_email)
         context = {'status': 'Student Record Added'}
     finally:
         return Response(context)
@@ -98,13 +99,12 @@ def addAcademicInfo(request):
         academicRecord.sem8_pointer = sem8_pointer
         academicRecord.cgpa = cgpa
         academicRecord.be_percent = be_percent
-        academicRecord.save(update_fields=['tenth_percent', 'twelveth_percent', 'sem1_pointer', 'sem2_pointer',
-                            'sem3_pointer', 'sem4_pointer', 'sem5_pointer', 'sem6_pointer', 'sem7_pointer', 'sem8_pointer', 'cgpa', 'be_percent'])
+        academicRecord.save(update_fields=['tenth_percent', 'twelveth_percent', 'sem1_pointer', 'sem2_pointer', 'sem3_pointer',
+                            'sem4_pointer', 'sem5_pointer', 'sem6_pointer', 'sem7_pointer', 'sem8_pointer', 'cgpa', 'be_percent'])
         context = {'status': 'Academic Record Updated'}
     except:
         AcademicInfo.objects.create(student=student, tenth_percent=tenth_percent, twelveth_percent=twelveth_percent, sem1_pointer=sem1_pointer, sem2_pointer=sem2_pointer, sem3_pointer=sem3_pointer,
-                                    sem4_pointer=sem4_pointer, sem5_pointer=sem5_pointer, sem6_pointer=sem6_pointer, sem7_pointer=sem7_pointer, sem8_pointer=sem8_pointer, cgpa=cgpa, be_percent=be_percent
-                                    )
+                                    sem4_pointer=sem4_pointer, sem5_pointer=sem5_pointer, sem6_pointer=sem6_pointer, sem7_pointer=sem7_pointer, sem8_pointer=sem8_pointer, cgpa=cgpa, be_percent=be_percent)
         context = {'status': 'Academic Record Added'}
     finally:
         return Response(context)
@@ -139,15 +139,12 @@ def addSkillSet(request):
         skillsetRecord.acad_achievement_three = acad_achievement_three
         skillsetRecord.acad_achievement_four = acad_achievement_four
         skillsetRecord.career_obj = career_obj
-        skillsetRecord.save(update_fields=['certificate_one', 'certificate_two', 'certificate_three',
-                            'certificate_four', 'acad_achievement_one', 'acad_achievement_two', 'acad_achievement_three', 'acad_achievement_four', 'career_obj'])
+        skillsetRecord.save(update_fields=['certificate_one', 'certificate_two', 'certificate_three', 'certificate_four',
+                            'acad_achievement_one', 'acad_achievement_two', 'acad_achievement_three', 'acad_achievement_four', 'career_obj'])
         context = {'status': 'SkillSet Record Updated'}
     except:
-        SkillSet.objects.create(student=student, certificate_one=certificate_one,
-                                certificate_two=certificate_two, certificate_three=certificate_three,
-                                certificate_four=certificate_four, acad_achievement_four=acad_achievement_four,
-                                acad_achievement_one=acad_achievement_one, acad_achievement_two=acad_achievement_two, acad_achievement_three=acad_achievement_three, career_obj=career_obj
-                                )
+        SkillSet.objects.create(student=student, certificate_one=certificate_one, certificate_two=certificate_two, certificate_three=certificate_three, certificate_four=certificate_four,
+                                acad_achievement_four=acad_achievement_four, acad_achievement_one=acad_achievement_one, acad_achievement_two=acad_achievement_two, acad_achievement_three=acad_achievement_three, career_obj=career_obj)
         context = {'status': 'SkillSet Record Added'}
     finally:
         return Response(context)
@@ -183,7 +180,6 @@ def addExperience(request):
         experienceRecord.save(update_fields=['internship_one', 'internship_two', 'internship_three',
                               'project_one', 'project_two', 'project_three', 'pref_lang', 'technologies'])
         context = {'status': 'Experience Record Updated'}
-
     except:
         Experience.objects.create(student=student, internship_one=internship_one, internship_two=internship_two, internship_three=internship_three,
                                   project_one=project_one, project_two=project_two, project_three=project_three, pref_lang=pref_lang, technologies=technologies)
@@ -218,7 +214,6 @@ def addPlacementDetails(request):
         placementRecord.save(update_fields=['offer_letter_one', 'offer_letter_two',
                              'placed_org_one', 'placed_org_two', 'package_one', 'package_two'])
         context = {'status': 'Placement Record Updated'}
-
     except:
         PlacementDetails.objects.create(student=student, offer_letter_one=offer_letter_one, offer_letter_two=offer_letter_two,
                                         placed_org_one=placed_org_one, placed_org_two=placed_org_two, package_one=package_one, package_two=package_two)
@@ -258,8 +253,8 @@ def addOtherInfo(request):
                          'pos_of_res_four', 'extracuricular_one', 'extracuricular_two', 'extracuricular_three'])
         context = {'status': 'Other Info Updated'}
     except:
-        OtherInfo.objects.create(student=student, hobbies=hobbies,
-                                 pos_of_res_one=pos_of_res_one, pos_of_res_two=pos_of_res_two, pos_of_res_three=pos_of_res_three, pos_of_res_four=pos_of_res_four, extracuricular_one=extracuricular_one, extracuricular_two=extracuricular_two, extracuricular_three=extracuricular_three)
+        OtherInfo.objects.create(student=student, hobbies=hobbies, pos_of_res_one=pos_of_res_one, pos_of_res_two=pos_of_res_two, pos_of_res_three=pos_of_res_three,
+                                 pos_of_res_four=pos_of_res_four, extracuricular_one=extracuricular_one, extracuricular_two=extracuricular_two, extracuricular_three=extracuricular_three)
         context = {'status': 'Other Info Added'}
     finally:
         return Response(context)
@@ -299,29 +294,339 @@ def viewStudent(request):
 
 @api_view(['POST'])
 def viewAcademicInfo(request):
-    pass
+    roll_no = request.data['roll_no']
+
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+        academic_info = AcademicInfo.objects.get(student=student)
+        response = {
+            'roll_no': academic_info.student.roll_no,
+            'tenth_percent': academic_info.tenth_percent,
+            'twelveth_percent': academic_info.twelveth_percent,
+            'sem1_pointer': academic_info.sem1_pointer,
+            'sem2_pointer': academic_info.sem2_pointer,
+            'sem3_pointer': academic_info.sem3_pointer,
+            'sem4_pointer': academic_info.sem4_pointer,
+            'sem5_pointer': academic_info.sem5_pointer,
+            'sem6_pointer': academic_info.sem6_pointer,
+            'sem7_pointer': academic_info.sem7_pointer,
+            'sem8_pointer': academic_info.sem8_pointer,
+            'cgpa': academic_info.cgpa,
+            'be_percent': academic_info.be_percent
+        }
+        return Response(response)
+    except Exception as e:
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
 
 
 @api_view(['POST'])
 def viewSkillSet(request):
-    pass
+    roll_no = request.data['roll_no']
+
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+        skillset = SkillSet.objects.get(student=student)
+        try:
+            certificate_one = skillset.certificate_one.url
+        except:
+            certificate_one = ''
+        try:
+            certificate_two = skillset.certificate_two.url
+        except:
+            certificate_two = ''
+        try:
+            certificate_three = skillset.certificate_three.url
+        except:
+            certificate_three = ''
+        try:
+            certificate_four = skillset.certificate_four.url
+        except:
+            certificate_four = ''
+        response = {
+            'roll_no': skillset.student.roll_no,
+            'certificate_one': certificate_one,
+            'certificate_two': certificate_two,
+            'certificate_three': certificate_three,
+            'certificate_four': certificate_four,
+            'acad_achievement_one': skillset.acad_achievement_one,
+            'acad_achievement_two': skillset.acad_achievement_two,
+            'acad_achievement_three': skillset.acad_achievement_three,
+            'acad_achievement_four': skillset.acad_achievement_four,
+            'career_obj': skillset.career_obj
+        }
+        return Response(response)
+    except Exception as e:
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
 
 
 @api_view(['POST'])
 def viewExperience(request):
-    pass
+    roll_no = request.data['roll_no']
+
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+        experience = Experience.objects.get(student=student)
+        response = {
+            'roll_no': experience.student.roll_no,
+            'internship_one': experience.internship_one,
+            'internship_two': experience.internship_two,
+            'internship_three': experience.internship_three,
+            'project_one': experience.project_one,
+            'project_two': experience.project_two,
+            'project_three': experience.project_three,
+            'pref_lang': experience.pref_lang,
+            'technologies': experience.technologies
+        }
+        return Response(response)
+    except Exception as e:
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
 
 
 @api_view(['POST'])
 def viewPlacementDetails(request):
-    pass
+    roll_no = request.data['roll_no']
+
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+        placement_details = PlacementDetails.objects.get(student=student)
+        try:
+            offer_letter_one = placement_details.offer_letter_one.url
+        except:
+            offer_letter_one = ''
+        try:
+            offer_letter_two = placement_details.offer_letter_two.url
+        except:
+            offer_letter_two = ''
+        response = {
+            'roll_no': placement_details.student.roll_no,
+            'offer_letter_one': offer_letter_one,
+            'offer_letter_two': offer_letter_two,
+            'placed_org_one': placement_details.placed_org_one,
+            'placed_org_two': placement_details.placed_org_two,
+            'package_one': placement_details.package_one,
+            'package_two': placement_details.package_two
+        }
+        return Response(response)
+    except Exception as e:
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
 
 
 @api_view(['POST'])
 def viewOtherInfo(request):
-    pass
+    roll_no = request.data['roll_no']
+
+    try:
+        student = Student.objects.get(roll_no=roll_no)
+        other_info = OtherInfo.objects.get(student=student)
+        response = {
+            'hobbies': other_info.hobbies,
+            'pos_of_res_one': other_info.pos_of_res_one,
+            'pos_of_res_two': other_info.pos_of_res_two,
+            'pos_of_res_three': other_info.pos_of_res_three,
+            'pos_of_res_four': other_info.pos_of_res_four,
+            'extracuricular_one': other_info.extracuricular_one,
+            'extracuricular_two': other_info.extracuricular_two,
+            'extracuricular_three': other_info.extracuricular_three
+        }
+        return Response(response)
+    except Exception as e:
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
 
 
 @api_view(['POST'])
 def studentLogin(request):
     pass
+
+
+@api_view(['GET'])
+def getAllStudents(request):
+    url = "http://localhost:5000/filter"
+    payload = ""
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.text)
+    return Response(response.text)
+
+
+@api_view(['POST'])
+def getStudentByRollNo(request):
+    roll_no = request.data['roll_no']
+    url = "http://localhost:5000/filter/" + roll_no
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.text)
+    return Response(response.text)
+
+
+@api_view(['POST'])
+def getStudentsByDept(request):
+    department = request.data['department']
+    url = "http://localhost:5000/filter/dept/" + department
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.text)
+    return Response(response.text)
+
+
+@api_view(['POST'])
+def getStudentProfile(request):
+    roll_no = request.data['roll_no']
+    url = "http://localhost:5000/filter/profile/" + roll_no
+    payload = ""
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    print(response.text)
+    return Response(response.text)
+
+
+@api_view(['POST'])
+def downloadExcel(request):
+    url = "http://localhost:5000/downloadcsv"
+
+    payload = json.dumps({
+        "students": [
+            {
+                "rollno": "19IT1024",
+                "first_name": "Rohit",
+                "last_name": "Patil",
+                "middle_name": "Pralhad",
+                "email": "rohitpatil07122001@gmail.com",
+                "phone_number": 7400216373,
+                "gender": "M",
+                "github": None,
+                "linkedin": None,
+                "no_of_offers": None,
+                "password": "dypatil@123",
+                "photo": None,
+                "department": "IT",
+                "batch": 2023,
+                "rait_email": "roh.pat3.rt19@rait.ac.in",
+                "other_info": {
+                    "hobbies": "swimming"
+                },
+                "academic_info": {
+                    "rollno": "19IT1024",
+                    "tenth_percent": 94,
+                    "twelveth_percent": 81.38,
+                    "sem1_pointer": 8.5,
+                    "sem2_pointer": 9.9,
+                    "sem3_pointer": None,
+                    "sem4_pointer": None,
+                    "sem5_pointer": None,
+                    "sem6_pointer": None,
+                    "sem7_pointer": None,
+                    "sem8_pointer": None,
+                    "cgpa": None,
+                    "be_percent": None
+                },
+                "student_placement_details": None,
+                "student_experience": {
+                    "rollno": "19IT1024",
+                    "intership_one": None,
+                    "intership_two": None,
+                    "intership_three": None,
+                    "project_one": None,
+                    "project_two": None,
+                    "project_three": None,
+                    "pref_lang": "Python",
+                    "technologies": None
+                },
+                "student_skillset": None
+            }
+        ]
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.text)
+    return Response(response.text)
+
+
+@api_view(['POST'])
+def downloadCSV(request):
+    url = "http://localhost:5000/downloadcsv"
+
+    payload = json.dumps({
+        "students": [
+            {
+                "rollno": "19IT1024",
+                "first_name": "Rohit",
+                "last_name": "Patil",
+                "middle_name": "Pralhad",
+                "email": "rohitpatil07122001@gmail.com",
+                "phone_number": 7400216373,
+                "gender": "M",
+                "github": None,
+                "linkedin": None,
+                "no_of_offers": None,
+                "password": "dypatil@123",
+                "photo": None,
+                "department": "IT",
+                "batch": 2023,
+                "rait_email": "roh.pat3.rt19@rait.ac.in",
+                "other_info": {
+                    "hobbies": "swimming"
+                },
+                "academic_info": {
+                    "rollno": "19IT1024",
+                    "tenth_percent": 94,
+                    "twelveth_percent": 81.38,
+                    "sem1_pointer": 8.5,
+                    "sem2_pointer": 9.9,
+                    "sem3_pointer": None,
+                    "sem4_pointer": None,
+                    "sem5_pointer": None,
+                    "sem6_pointer": None,
+                    "sem7_pointer": None,
+                    "sem8_pointer": None,
+                    "cgpa": None,
+                    "be_percent": None
+                },
+                "student_placement_details": None,
+                "student_experience": {
+                    "rollno": "19IT1024",
+                    "intership_one": None,
+                    "intership_two": None,
+                    "intership_three": None,
+                    "project_one": None,
+                    "project_two": None,
+                    "project_three": None,
+                    "pref_lang": "Python",
+                    "technologies": None
+                },
+                "student_skillset": None
+            }
+        ]
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.text)
+    return Response(response.text)
+
+
+@api_view(['POST'])
+def dashboard(request):
+
+    url = "http://localhost:5000/filter/dashboard"
+
+    payload = json.dumps({
+        "fields": {
+            "rollno": True,
+            "hobbies": True,
+            "sem_pointer": True
+        },
+        "queries": {
+            "rollno": "19IT1024"
+        }
+    })
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(response.text)
+    return Response(response.text)

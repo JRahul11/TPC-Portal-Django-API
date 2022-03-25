@@ -22,7 +22,15 @@ urlpatterns = [
     path('viewSkillSet/', viewSkillSet, name='viewSkillSet'),
     path('viewExperience/', viewExperience, name='viewExperience'),
     path('viewPlacementDetails/', viewPlacementDetails, name='viewPlacement'),
-    path('viewOtherInfo/', viewOtherInfo, name='viewOtherInfo')
+    path('viewOtherInfo/', viewOtherInfo, name='viewOtherInfo'),
 
+    # Node.js APIS
+    path('getAllStudents/', getAllStudents, name='getAllStudents'),
+    path('getStudentByRollNo/', getStudentByRollNo, name='getStudentByRollNo'),
+    path('getStudentsByDept/', getStudentsByDept, name='getStudentsByDept'),
+    path('getStudentProfile/', getStudentProfile, name='getStudentProfile'),
+    path('downloadExcel/', downloadExcel, name='downloadExcel'),
+    path('downloadCSV/', downloadCSV, name='downloadCSV'),
+    path('dashboard/', dashboard, name='dashboard'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
