@@ -5,3 +5,5 @@ drf-api-logger
 pillow
 gunicorn
 whitenoise
+requests
+xlrd

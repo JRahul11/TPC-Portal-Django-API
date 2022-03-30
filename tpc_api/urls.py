@@ -29,8 +29,6 @@ urlpatterns = [
     path('getStudentByRollNo/', getStudentByRollNo, name='getStudentByRollNo'),
     path('getStudentsByDept/', getStudentsByDept, name='getStudentsByDept'),
     path('getStudentProfile/', getStudentProfile, name='getStudentProfile'),
-    path('downloadExcel/', downloadExcel, name='downloadExcel'),
-    path('downloadCSV/', downloadCSV, name='downloadCSV'),
     path('dashboard/', dashboard, name='dashboard'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

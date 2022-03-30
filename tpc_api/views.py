@@ -440,185 +440,54 @@ def studentLogin(request):
 
 @api_view(['GET'])
 def getAllStudents(request):
-    url = "http://localhost:5000/filter"
+    url = "https://tpc-backend-node.herokuapp.com/filter"
     payload = ""
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
-    return Response(response.text)
+    return Response(response.json())
 
 
 @api_view(['POST'])
 def getStudentByRollNo(request):
     roll_no = request.data['roll_no']
-    url = "http://localhost:5000/filter/" + roll_no
+    url = "https://tpc-backend-node.herokuapp.com/filter/" + roll_no
     payload = {}
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
-    return Response(response.text)
+    return Response(response.json())
 
 
 @api_view(['POST'])
 def getStudentsByDept(request):
     department = request.data['department']
-    url = "http://localhost:5000/filter/dept/" + department
+    url = "https://tpc-backend-node.herokuapp.com/filter/dept/" + department
     payload = {}
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
-    return Response(response.text)
+    return Response(response.json())
 
 
 @api_view(['POST'])
 def getStudentProfile(request):
     roll_no = request.data['roll_no']
-    url = "http://localhost:5000/filter/profile/" + roll_no
+    url = "https://tpc-backend-node.herokuapp.com/filter/profile/" + roll_no
     payload = ""
     headers = {}
     response = requests.request("GET", url, headers=headers, data=payload)
-    print(response.text)
-    return Response(response.text)
-
-
-@api_view(['POST'])
-def downloadExcel(request):
-    url = "http://localhost:5000/downloadcsv"
-
-    payload = json.dumps({
-        "students": [
-            {
-                "rollno": "19IT1024",
-                "first_name": "Rohit",
-                "last_name": "Patil",
-                "middle_name": "Pralhad",
-                "email": "rohitpatil07122001@gmail.com",
-                "phone_number": 7400216373,
-                "gender": "M",
-                "github": None,
-                "linkedin": None,
-                "no_of_offers": None,
-                "password": "dypatil@123",
-                "photo": None,
-                "department": "IT",
-                "batch": 2023,
-                "rait_email": "roh.pat3.rt19@rait.ac.in",
-                "other_info": {
-                    "hobbies": "swimming"
-                },
-                "academic_info": {
-                    "rollno": "19IT1024",
-                    "tenth_percent": 94,
-                    "twelveth_percent": 81.38,
-                    "sem1_pointer": 8.5,
-                    "sem2_pointer": 9.9,
-                    "sem3_pointer": None,
-                    "sem4_pointer": None,
-                    "sem5_pointer": None,
-                    "sem6_pointer": None,
-                    "sem7_pointer": None,
-                    "sem8_pointer": None,
-                    "cgpa": None,
-                    "be_percent": None
-                },
-                "student_placement_details": None,
-                "student_experience": {
-                    "rollno": "19IT1024",
-                    "intership_one": None,
-                    "intership_two": None,
-                    "intership_three": None,
-                    "project_one": None,
-                    "project_two": None,
-                    "project_three": None,
-                    "pref_lang": "Python",
-                    "technologies": None
-                },
-                "student_skillset": None
-            }
-        ]
-    })
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
-    return Response(response.text)
-
-
-@api_view(['POST'])
-def downloadCSV(request):
-    url = "http://localhost:5000/downloadcsv"
-
-    payload = json.dumps({
-        "students": [
-            {
-                "rollno": "19IT1024",
-                "first_name": "Rohit",
-                "last_name": "Patil",
-                "middle_name": "Pralhad",
-                "email": "rohitpatil07122001@gmail.com",
-                "phone_number": 7400216373,
-                "gender": "M",
-                "github": None,
-                "linkedin": None,
-                "no_of_offers": None,
-                "password": "dypatil@123",
-                "photo": None,
-                "department": "IT",
-                "batch": 2023,
-                "rait_email": "roh.pat3.rt19@rait.ac.in",
-                "other_info": {
-                    "hobbies": "swimming"
-                },
-                "academic_info": {
-                    "rollno": "19IT1024",
-                    "tenth_percent": 94,
-                    "twelveth_percent": 81.38,
-                    "sem1_pointer": 8.5,
-                    "sem2_pointer": 9.9,
-                    "sem3_pointer": None,
-                    "sem4_pointer": None,
-                    "sem5_pointer": None,
-                    "sem6_pointer": None,
-                    "sem7_pointer": None,
-                    "sem8_pointer": None,
-                    "cgpa": None,
-                    "be_percent": None
-                },
-                "student_placement_details": None,
-                "student_experience": {
-                    "rollno": "19IT1024",
-                    "intership_one": None,
-                    "intership_two": None,
-                    "intership_three": None,
-                    "project_one": None,
-                    "project_two": None,
-                    "project_three": None,
-                    "pref_lang": "Python",
-                    "technologies": None
-                },
-                "student_skillset": None
-            }
-        ]
-    })
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
-    return Response(response.text)
+    return Response(response.json())
 
 
 @api_view(['POST'])
 def dashboard(request):
 
-    url = "http://localhost:5000/filter/dashboard"
+    url = "https://tpc-backend-node.herokuapp.com/filter/dashboard"
 
     payload = json.dumps({
         "fields": {
             "rollno": True,
             "hobbies": True,
-            "sem_pointer": True
+            "sem_pointer": True,
+            "project": True,
         },
         "queries": {
             "rollno": "19IT1024"
@@ -628,5 +497,4 @@ def dashboard(request):
         'Content-Type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
-    return Response(response.text)
+    return Response(response.json())
