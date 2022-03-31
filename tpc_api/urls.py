@@ -5,6 +5,9 @@ from django.urls import include, path
 from .views import *
 
 urlpatterns = [
+    # Base URL
+    path('', welcome, name='welcome'),
+
     # Authentication
     path('studentLogin/', studentLogin, name='studentLogin'),
 

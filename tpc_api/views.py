@@ -19,6 +19,11 @@ def getData(request, field, Decimal=False, Integer=False, File=False):
         return None
 
 
+@api_view(['GET'])
+def welcome(request):
+    return Response("Welcome to Django REST Backend")
+
+
 @api_view(['POST'])
 def addStudent(request):
     roll_no = request.data['roll_no']
@@ -28,11 +33,11 @@ def addStudent(request):
     email = request.data['email']
     phone_number = request.data['phone_number']
     gender = request.data['gender']
-    github = request.data['github']
-    linkedin = request.data['linkedin']
-    no_of_offers = int(request.data['no_of_offers'])
+    github = getData(request, 'github')
+    linkedin = getData(request, 'linkedin')
+    no_of_offers = int(getData(request, 'no_of_offers'))
     password = request.data['password']
-    photo = request.FILES['photo']
+    photo = getData(request, 'photo', File=True)
     department = request.data['department']
     batch = int(request.data['batch'])
     rait_email = request.data['rait_email']
@@ -83,7 +88,7 @@ def addAcademicInfo(request):
     try:
         student = Student.objects.get(roll_no=roll_no)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
     try:
         academicRecord = AcademicInfo.objects.get(student=student)
@@ -126,7 +131,7 @@ def addSkillSet(request):
     try:
         student = Student.objects.get(roll_no=roll_no)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
     try:
         skillsetRecord = SkillSet.objects.get(student=student)
@@ -165,7 +170,7 @@ def addExperience(request):
     try:
         student = Student.objects.get(roll_no=roll_no)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
     try:
         experienceRecord = Experience.objects.get(student=student)
@@ -201,7 +206,7 @@ def addPlacementDetails(request):
     try:
         student = Student.objects.get(roll_no=roll_no)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
     try:
         placementRecord = PlacementDetails.objects.get(student=student)
@@ -237,7 +242,7 @@ def addOtherInfo(request):
     try:
         student = Student.objects.get(roll_no=roll_no)
     except Exception as e:
-        return Response({'status': 'error', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
     try:
         otherRecord = OtherInfo.objects.get(student=student)
@@ -289,7 +294,7 @@ def viewStudent(request):
         return Response(response)
 
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
 
 @api_view(['POST'])
@@ -316,7 +321,7 @@ def viewAcademicInfo(request):
         }
         return Response(response)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
 
 @api_view(['POST'])
@@ -356,7 +361,7 @@ def viewSkillSet(request):
         }
         return Response(response)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
 
 @api_view(['POST'])
@@ -379,7 +384,7 @@ def viewExperience(request):
         }
         return Response(response)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
 
 @api_view(['POST'])
@@ -408,7 +413,7 @@ def viewPlacementDetails(request):
         }
         return Response(response)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
 
 @api_view(['POST'])
@@ -430,12 +435,19 @@ def viewOtherInfo(request):
         }
         return Response(response)
     except Exception as e:
-        return Response({'status': 'Student does not exist', 'error_msg': str(e)})
+        return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
 
 
 @api_view(['POST'])
 def studentLogin(request):
-    pass
+    rait_email = request.data['rait_email']
+    password = request.data['password']
+
+    try:
+        student = Student.objects.get(rait_email=rait_email, password=password)
+        return Response({'status': 'Success'})
+    except Exception as e:
+        return Response({'status': 'Incorrect Credentials', 'error_msg': str(e)}, status=500)
 
 
 @api_view(['GET'])
@@ -479,9 +491,7 @@ def getStudentProfile(request):
 
 @api_view(['POST'])
 def dashboard(request):
-
     url = "https://tpc-backend-node.herokuapp.com/filter/dashboard"
-
     payload = json.dumps({
         "fields": {
             "rollno": True,
