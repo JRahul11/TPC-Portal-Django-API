@@ -1,37 +1,27 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
+from rest_framework_simplejwt.views import (TokenRefreshView)
 from .views import *
 
 urlpatterns = [
     # Base URL
-    path('', welcome, name='welcome'),
-
-    # Authentication
-    path('studentLogin/', studentLogin, name='studentLogin'),
+    path('', Welcome.as_view(), name='welcome'),
 
     # Insert/ Update
-    path('addStudent/', addStudent, name='addStudent'),
-    path('addAcademicInfo/', addAcademicInfo, name='addAcademicInfo'),
-    path('addSkillSet/', addSkillSet, name='addSkillSet'),
-    path('addExperience/', addExperience, name='addExperience'),
-    path('addPlacementDetails/', addPlacementDetails, name='addPlacementDetails'),
-    path('addOtherInfo/', addOtherInfo, name='addOtherInfo'),
+    path('addStudent/', AddStudent.as_view(), name='addStudent'),
+    path('addAcademicInfo/', AddAcademicInfo.as_view(), name='addAcademicInfo'),
+    path('addSkillSet/', AddSkillSet.as_view(), name='addSkillSet'),
+    path('addExperience/', AddExperience.as_view(), name='addExperience'),
+    path('addPlacementDetails/', AddPlacementDetails.as_view(), name='addPlacementDetails'),
+    path('addOtherInfo/', AddOtherInfo.as_view(), name='addOtherInfo'),
 
     # Retrieve
-    path('viewStudent/', viewStudent, name='viewStudent'),
-    path('viewAcademicInfo/', viewAcademicInfo, name='viewAcademicInfo'),
-    path('viewSkillSet/', viewSkillSet, name='viewSkillSet'),
-    path('viewExperience/', viewExperience, name='viewExperience'),
-    path('viewPlacementDetails/', viewPlacementDetails, name='viewPlacement'),
-    path('viewOtherInfo/', viewOtherInfo, name='viewOtherInfo'),
-
-    # Node.js APIS
-    path('getAllStudents/', getAllStudents, name='getAllStudents'),
-    path('getStudentByRollNo/', getStudentByRollNo, name='getStudentByRollNo'),
-    path('getStudentsByDept/', getStudentsByDept, name='getStudentsByDept'),
-    path('getStudentProfile/', getStudentProfile, name='getStudentProfile'),
-    path('dashboard/', dashboard, name='dashboard'),
+    path('viewStudent/', ViewStudent.as_view(), name='viewStudent'),
+    path('viewAcademicInfo/', ViewAcademicInfo.as_view(), name='viewAcademicInfo'),
+    path('viewSkillSet/', ViewSkillSet.as_view(), name='viewSkillSet'),
+    path('viewExperience/', ViewExperience.as_view(), name='viewExperience'),
+    path('viewPlacementDetails/', ViewPlacementDetails.as_view(), name='viewPlacement'),
+    path('viewOtherInfo/', ViewOtherInfo.as_view(), name='viewOtherInfo'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

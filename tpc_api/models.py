@@ -7,7 +7,7 @@ class Student(models.Model):
         ('F', 'F')
     )
 
-    roll_no = models.CharField(max_length=10, primary_key=True)
+    roll_no = models.CharField(max_length=10, unique=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
@@ -28,6 +28,7 @@ class Student(models.Model):
 
     class Meta:
         verbose_name_plural = "Student"
+        db_table = "students"
 
 
 class AcademicInfo(models.Model):
@@ -50,6 +51,7 @@ class AcademicInfo(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Academic Info"
+        db_table = "academic_info"
 
 
 class SkillSet(models.Model):
@@ -69,6 +71,7 @@ class SkillSet(models.Model):
 
     class Meta:
         verbose_name_plural = "Student SkillSet"
+        db_table = "student_skillset"
 
 
 class Experience(models.Model):
@@ -87,6 +90,7 @@ class Experience(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Experience"
+        db_table = "student_experience"
 
 
 class PlacementDetails(models.Model):
@@ -103,6 +107,7 @@ class PlacementDetails(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Placement Detail"
+        db_table = "student_placement_details"
 
 
 class OtherInfo(models.Model):
@@ -121,6 +126,7 @@ class OtherInfo(models.Model):
 
     class Meta:
         verbose_name_plural = "Student Other Info"
+        db_table = "other_info"
 
 
 class Admin(models.Model):
@@ -132,3 +138,4 @@ class Admin(models.Model):
 
     class Meta:
         verbose_name_plural = "Admin"
+        db_table = "admins"

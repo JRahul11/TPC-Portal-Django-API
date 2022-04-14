@@ -2,6 +2,8 @@ Django
 djangorestframework
 django-cors-headers
 drf-api-logger
+djangorestframework-simplejwt
+djangorestframework-jwt
 pillow
 gunicorn
 whitenoise
