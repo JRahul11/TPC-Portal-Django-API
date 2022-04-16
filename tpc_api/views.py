@@ -39,7 +39,7 @@ class AddStudent(APIView):
         gender = request.data['gender']
         github = GetData.getData(self, request, 'github')
         linkedin = GetData.getData(self, request, 'linkedin')
-        no_of_offers = int(GetData.getData(self, request, 'no_of_offers'))
+        no_of_offers = GetData.getData(self, request, 'no_of_offers', Integer=True)
         password = request.data['password']
         photo = GetData.getData(self, request, 'photo', File=True)
         department = request.data['department']
@@ -83,7 +83,7 @@ class AddAcademicInfo(APIView):
         tenth_obtained_marks = GetData.getData(self, request, 'tenth_obtained_marks', Integer=True)
         tenth_total_marks = GetData.getData(self, request, 'tenth_total_marks', Integer=True)
         # HSC Data
-        twelveth_percent = request.data['twelveth_percent']
+        twelveth_percent = GetData.getData(self, request, 'twelveth_percent', Decimal=True)
         twelveth_completion_date = GetData.getData(self, request, 'twelveth_completion_date')
         twelveth_obtained_marks = GetData.getData(self, request, 'twelveth_obtained_marks', Integer=True)
         twelveth_total_marks = GetData.getData(self, request, 'twelveth_total_marks', Integer=True)
