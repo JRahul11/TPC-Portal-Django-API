@@ -1,15 +1,17 @@
-FROM python:3.7
+FROM python:3.7-alpine3.12
 
-ENV PYTHONUNBUFFERED 1
+COPY requirements.txt /app/requirements.txt
 
-COPY ./requirements.txt /app/requirements.txt
-
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN set -ex \
+    && pip install --upgrade pip \
+    && apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl \
+    && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
+    && pip install Pillow \
+    && pip install --no-cache-dir -r /app/requirements.txt
 
 WORKDIR /app
 
 ADD . .
-
 
 RUN python manage.py makemigrations
 RUN python manage.py migrate
