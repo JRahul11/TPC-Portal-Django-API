@@ -17,7 +17,7 @@ class Student(models.Model):
     github = models.CharField(max_length=50, null=True, blank=True)
     linkedin = models.CharField(max_length=50, null=True, blank=True)
     no_of_offers = models.IntegerField(null=True, blank=True)
-    password = models.CharField(max_length=50, default="dypatil@123")
+    password = models.CharField(max_length=100, default="dypatil@123")
     photo = models.ImageField(upload_to='studentPhoto', default=None, blank=True)
     department = models.CharField(max_length=50, null=True, blank=True)
     batch = models.IntegerField(null=True, blank=True)

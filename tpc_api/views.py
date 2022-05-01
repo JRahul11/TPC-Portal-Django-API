@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -40,7 +41,7 @@ class AddStudent(APIView):
         github = GetData.getData(self, request, 'github')
         linkedin = GetData.getData(self, request, 'linkedin')
         no_of_offers = GetData.getData(self, request, 'no_of_offers', Integer=True)
-        password = request.data['password']
+        password = make_password(request.data['password'])
         photo = GetData.getData(self, request, 'photo', File=True)
         department = request.data['department']
         batch = int(request.data['batch'])

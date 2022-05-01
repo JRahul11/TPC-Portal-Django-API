@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import check_password
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -10,18 +11,21 @@ class StudentLogin(APIView):
         password = request.data['password']
 
         try:
-            student = Student.objects.get(rait_email=rait_email, password=password)
-            refresh = RefreshToken.for_user(student)
-            access = str(refresh.access_token)
-            response = Response(
-                {
-                    'status': 'User Logged In', 
-                    'refresh': str(refresh), 
-                    'access': access
-                }
-            )
-            response.set_cookie(key='jwt', value=access, httponly=True)
-            return response
+            student = Student.objects.get(rait_email=rait_email)
+            if check_password(password, student.password):
+                refresh = RefreshToken.for_user(student)
+                access = str(refresh.access_token)
+                response = Response(
+                    {
+                        'status': 'User Logged In', 
+                        'refresh': str(refresh), 
+                        'access': access
+                    }
+                )
+                response.set_cookie(key='jwt', value=access, httponly=True)
+                return response
+            else:
+                raise(Exception('Password is incorrect'))
         except Exception as e:
             return Response(
                 {
