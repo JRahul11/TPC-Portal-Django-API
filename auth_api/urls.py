@@ -7,6 +7,9 @@ from .views import *
 urlpatterns = [
 
     path('studentLogin/', StudentLogin.as_view(), name='studentLogin'),
+
+    path('dummyStudentSignUp/', DummyStudentSignUp.as_view(), name='dummyStudentSignUp'),
+
     path('studentLogin/tokenRefresh/', TokenRefreshView.as_view()),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

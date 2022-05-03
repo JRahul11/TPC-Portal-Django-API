@@ -1,8 +1,6 @@
 from django.contrib.auth.hashers import make_password
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from .models import *
 
 
@@ -22,13 +20,13 @@ class GetData:
 
 
 class Welcome(APIView):
+    permission_classes = []
+
     def get(self, request):
-        return Response("Welcome to Django REST Backend")
+        return Response("Welcome to TPC Django REST Backend")
 
 
 class AddStudent(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
 
     def post(self, request):
         roll_no = request.data['roll_no']
@@ -73,9 +71,7 @@ class AddStudent(APIView):
 
 
 class AddAcademicInfo(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
         # SSC Data
@@ -229,9 +225,7 @@ class AddAcademicInfo(APIView):
 
 
 class AddSkillSet(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
         certificate_one = GetData.getData(self, request, 'certificate_one', File=True)
@@ -270,9 +264,7 @@ class AddSkillSet(APIView):
 
 
 class AddExperience(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
         internship_one = GetData.getData(self, request, 'internship_one')
@@ -309,9 +301,7 @@ class AddExperience(APIView):
 
 
 class AddPlacementDetails(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
         offer_letter_one = GetData.getData(self, request, offer_letter_one, File=True)
@@ -344,9 +334,7 @@ class AddPlacementDetails(APIView):
 
 
 class AddOtherInfo(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
         hobbies = request.data['hobbies']
@@ -383,8 +371,6 @@ class AddOtherInfo(APIView):
 
 
 class ViewStudent(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
 
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
@@ -418,9 +404,7 @@ class ViewStudent(APIView):
 
 
 class ViewAcademicInfo(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
 
@@ -500,9 +484,7 @@ class ViewAcademicInfo(APIView):
 
 
 class ViewSkillSet(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
 
@@ -543,9 +525,7 @@ class ViewSkillSet(APIView):
 
 
 class ViewExperience(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
-    
+
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
 
@@ -569,8 +549,6 @@ class ViewExperience(APIView):
 
 
 class ViewPlacementDetails(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
 
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
@@ -601,8 +579,6 @@ class ViewPlacementDetails(APIView):
 
 
 class ViewOtherInfo(APIView):
-    permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
 
     def post(self, request):
         roll_no = request.data['roll_no'].strip()

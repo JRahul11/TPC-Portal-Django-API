@@ -1,7 +1,32 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 
-class Student(models.Model):
+class CustomManager(BaseUserManager):
+
+    def create_superuser(self, rait_email, password, **other_fields):
+        other_fields.setdefault('is_staff', True)
+        other_fields.setdefault('is_superuser', True)
+        
+        if other_fields.get('is_staff') is not True or other_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must be assigned to is_staff=True and is_superuser=True')
+        
+        return self.create_user(rait_email, password, **other_fields)
+
+    def create_user(self, rait_email, password, **other_fields):
+        
+        if not rait_email:
+            raise ValueError(_('You should provide a RAIT email address'))
+        
+        rait_email = self.normalize_email(rait_email)
+        user = self.model(rait_email=rait_email, **other_fields)
+        user.set_password(password)
+        user.save()
+        return user
+
+
+class Student(AbstractBaseUser, PermissionsMixin):
     gender_choices = (
         ('M', 'M'),
         ('F', 'F')
@@ -11,7 +36,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=50, null=True, blank=True)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
-    email = models.CharField(max_length=50, null=True, blank=True)
+    email = models.CharField(max_length=50, null=True, blank=True, unique=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     gender = models.CharField(max_length=10, choices=gender_choices, null=True, blank=True)
     github = models.CharField(max_length=50, null=True, blank=True)
@@ -21,10 +46,16 @@ class Student(models.Model):
     photo = models.ImageField(upload_to='studentPhoto', default=None, blank=True)
     department = models.CharField(max_length=50, null=True, blank=True)
     batch = models.IntegerField(null=True, blank=True)
-    rait_email = models.CharField(max_length=50, null=True, blank=True)
+    rait_email = models.CharField(max_length=50, null=True, blank=True, unique=True)
+    is_staff = models.BooleanField(default=False)
+    
+    objects = CustomManager()
+    
+    USERNAME_FIELD  = 'rait_email'
+    REQUIRED_FIELDS = ['password']
 
     def __str__(self):
-        return self.roll_no
+        return self.roll_no + ' ' + self.rait_email
 
     class Meta:
         verbose_name_plural = "Student"
