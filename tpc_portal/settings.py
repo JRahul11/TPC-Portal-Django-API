@@ -74,7 +74,6 @@ CORS_ALLOW_HEADERS = [
     'access-control-allow-headers',
 ]
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -86,6 +85,19 @@ DATABASES = {
     }
 }
 
+# AWS Configuration
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'tpc_database',
+#         'USER': 'tpcadmin',  # Change this to your username
+#         'PASSWORD': 'tpcadmin',  # Change this to your password
+#         'HOST': 'tpc-database.cvr5t5yxt7tj.us-east-1.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
+
+# Heroku Configuration
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -105,7 +117,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,

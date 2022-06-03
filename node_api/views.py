@@ -51,16 +51,24 @@ class GetStudentProfile(APIView):
 class Dashboard(APIView):
 
     def post(self, request):
+        roll_no = request.data['roll_no']
+        sem_pointer = request.data['sem_pointer'].lower()
+        project = request.data['project'].lower()
+        hobbies = request.data['hobbies'].lower()
+        
+        fields = {'rollno': True}
+        if hobbies == 'true':
+            fields['hobbies'] = hobbies.capitalize()
+        if sem_pointer == 'true':
+            fields['sem_pointer'] = sem_pointer.capitalize()
+        if project == 'true':
+            fields['project'] = project.capitalize()
+
         url = "https://tpc-backend-node.herokuapp.com/filter/dashboard"
         payload = json.dumps({
-            "fields": {
-                "rollno": True,
-                "hobbies": True,
-                "sem_pointer": True,
-                "project": True,
-            },
+            "fields": fields,
             "queries": {
-                "rollno": "19IT1024"
+                "rollno": roll_no
             }
         })
         headers = {
