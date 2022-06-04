@@ -23,5 +23,8 @@ urlpatterns = [
     path('viewExperience/', ViewExperience.as_view(), name='viewExperience'),
     path('viewPlacementDetails/', ViewPlacementDetails.as_view(), name='viewPlacement'),
     path('viewOtherInfo/', ViewOtherInfo.as_view(), name='viewOtherInfo'),
+    
+    # Notifications
+    path('notifications/', Notifications.as_view(), name='notifications'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

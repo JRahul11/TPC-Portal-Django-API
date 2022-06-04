@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from company.models import JobOpening
 
 
 class CustomManager(BaseUserManager):
@@ -133,6 +134,10 @@ class AcademicInfo(models.Model):
     masters_sem4_total_marks = models.PositiveIntegerField(null=True, blank=True)
     masters_cgpa = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     masters_percent = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    # kt
+    livekt = models.IntegerField(null=True, blank=True)
+    deadkt = models.IntegerField(null=True, blank=True)
+    gap = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.student.roll_no
@@ -227,3 +232,15 @@ class Admin(models.Model):
     class Meta:
         verbose_name_plural = "Admin"
         db_table = "admins"
+
+
+class EligibleStudents(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    job_opening = models.ForeignKey(JobOpening, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.student.roll_no + ' ' + str(self.job_opening.id)
+
+    class Meta:
+        verbose_name_plural = "Eligible Students"
+        db_table = "eligible_students"

@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'auth_api',
     'tpc_api',
     'node_api',
+    'superuser',
+    'company',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,7 @@ CORS_ALLOW_HEADERS = [
     'access-control-allow-headers',
 ]
 
+# Local Machine Configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

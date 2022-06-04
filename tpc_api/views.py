@@ -143,6 +143,10 @@ class AddAcademicInfo(APIView):
         masters_sem4_total_marks = GetData.getData(self, request, 'masters_sem4_total_marks', Integer=True)
         masters_cgpa = GetData.getData(self, request, 'masters_cgpa', Decimal=True)
         masters_percent = GetData.getData(self, request, 'masters_percent', Decimal=True)
+        # kt
+        livekt = GetData.getData(self, request, 'livekt', Integer=True)
+        deadkt = GetData.getData(self, request, 'deadkt', Integer=True)
+        gap =  GetData.getData(self, request, 'gap', Integer=True)
 
         try:
             student = Student.objects.get(roll_no=roll_no)
@@ -215,10 +219,13 @@ class AddAcademicInfo(APIView):
             academicRecord.masters_sem4_total_marks = masters_sem4_total_marks
             academicRecord.masters_cgpa = masters_cgpa
             academicRecord.masters_percent = masters_percent
-            academicRecord.save(update_fields=['tenth_percent', 'tenth_completion_date', 'tenth_obtained_marks', 'tenth_total_marks', 'twelveth_percent', 'twelveth_completion_date', 'twelveth_obtained_marks', 'twelveth_total_marks', 'diploma_percent', 'diploma_completion_date', 'diploma_obtained_marks', 'diploma_total_marks', 'sem1_pointer', 'sem1_completion_date', 'sem1_obtained_marks', 'sem1_total_marks', 'sem2_pointer', 'sem2_completion_date', 'sem2_obtained_marks', 'sem2_total_marks', 'sem3_pointer', 'sem3_completion_date', 'sem3_obtained_marks', 'sem3_total_marks', 'sem4_pointer', 'sem4_completion_date', 'sem4_obtained_marks', 'sem4_total_marks', 'sem5_pointer', 'sem5_completion_date', 'sem5_obtained_marks', 'sem5_total_marks', 'sem6_pointer', 'sem6_completion_date', 'sem6_obtained_marks', 'sem6_total_marks', 'sem7_pointer', 'sem7_completion_date', 'sem7_obtained_marks', 'sem7_total_marks', 'sem8_pointer', 'sem8_completion_date', 'sem8_obtained_marks', 'sem8_total_marks', 'cgpa', 'be_percent', 'masters_sem1_pointer', 'masters_sem1_completion_date', 'masters_sem1_obtained_marks', 'masters_sem1_total_marks', 'masters_sem2_pointer', 'masters_sem2_completion_date', 'masters_sem2_obtained_marks', 'masters_sem2_total_marks', 'masters_sem3_pointer', 'masters_sem3_completion_date', 'masters_sem3_obtained_marks', 'masters_sem3_total_marks', 'masters_sem4_pointer', 'masters_sem4_completion_date', 'masters_sem4_obtained_marks', 'masters_sem4_total_marks', 'masters_cgpa', 'masters_percent'])
+            academicRecord.livekt = livekt
+            academicRecord.deadkt = deadkt
+            academicRecord.gap = gap
+            academicRecord.save(update_fields=['tenth_percent', 'tenth_completion_date', 'tenth_obtained_marks', 'tenth_total_marks', 'twelveth_percent', 'twelveth_completion_date', 'twelveth_obtained_marks', 'twelveth_total_marks', 'diploma_percent', 'diploma_completion_date', 'diploma_obtained_marks', 'diploma_total_marks', 'sem1_pointer', 'sem1_completion_date', 'sem1_obtained_marks', 'sem1_total_marks', 'sem2_pointer', 'sem2_completion_date', 'sem2_obtained_marks', 'sem2_total_marks', 'sem3_pointer', 'sem3_completion_date', 'sem3_obtained_marks', 'sem3_total_marks', 'sem4_pointer', 'sem4_completion_date', 'sem4_obtained_marks', 'sem4_total_marks', 'sem5_pointer', 'sem5_completion_date', 'sem5_obtained_marks', 'sem5_total_marks', 'sem6_pointer', 'sem6_completion_date', 'sem6_obtained_marks', 'sem6_total_marks', 'sem7_pointer', 'sem7_completion_date', 'sem7_obtained_marks', 'sem7_total_marks', 'sem8_pointer', 'sem8_completion_date', 'sem8_obtained_marks', 'sem8_total_marks', 'cgpa', 'be_percent', 'masters_sem1_pointer', 'masters_sem1_completion_date', 'masters_sem1_obtained_marks', 'masters_sem1_total_marks', 'masters_sem2_pointer', 'masters_sem2_completion_date', 'masters_sem2_obtained_marks', 'masters_sem2_total_marks', 'masters_sem3_pointer', 'masters_sem3_completion_date', 'masters_sem3_obtained_marks', 'masters_sem3_total_marks', 'masters_sem4_pointer', 'masters_sem4_completion_date', 'masters_sem4_obtained_marks', 'masters_sem4_total_marks', 'masters_cgpa', 'masters_percent','livekt', 'deadkt', 'gap'])
             context = {'status': 'Academic Record Updated'}
         except:
-            AcademicInfo.objects.create(student=student, tenth_percent=tenth_percent, tenth_completion_date=tenth_completion_date, tenth_obtained_marks=tenth_obtained_marks, tenth_total_marks=tenth_total_marks, twelveth_percent=twelveth_percent, twelveth_completion_date=twelveth_completion_date, twelveth_obtained_marks=twelveth_obtained_marks, twelveth_total_marks=twelveth_total_marks, diploma_percent=diploma_percent, diploma_completion_date=diploma_completion_date, diploma_obtained_marks=diploma_obtained_marks, diploma_total_marks=diploma_total_marks, sem1_pointer=sem1_pointer, sem1_completion_date=sem1_completion_date, sem1_obtained_marks=sem1_obtained_marks, sem1_total_marks=sem1_total_marks, sem2_pointer=sem2_pointer, sem2_completion_date=sem2_completion_date, sem2_obtained_marks=sem2_obtained_marks, sem2_total_marks=sem2_total_marks, sem3_pointer=sem3_pointer, sem3_completion_date=sem3_completion_date, sem3_obtained_marks=sem3_obtained_marks, sem3_total_marks=sem3_total_marks, sem4_pointer=sem4_pointer, sem4_completion_date=sem4_completion_date, sem4_obtained_marks=sem4_obtained_marks, sem4_total_marks=sem4_total_marks, sem5_pointer=sem5_pointer, sem5_completion_date=sem5_completion_date, sem5_obtained_marks=sem5_obtained_marks, sem5_total_marks=sem5_total_marks, sem6_pointer=sem6_pointer, sem6_completion_date=sem6_completion_date, sem6_obtained_marks=sem6_obtained_marks, sem6_total_marks=sem6_total_marks, sem7_pointer=sem7_pointer, sem7_completion_date=sem7_completion_date, sem7_obtained_marks=sem7_obtained_marks, sem7_total_marks=sem7_total_marks, sem8_pointer=sem8_pointer, sem8_completion_date=sem8_completion_date, sem8_obtained_marks=sem8_obtained_marks, sem8_total_marks=sem8_total_marks, cgpa=cgpa, be_percent=be_percent, masters_sem1_pointer=masters_sem1_pointer, masters_sem1_completion_date=masters_sem1_completion_date, masters_sem1_obtained_marks=masters_sem1_obtained_marks, masters_sem1_total_marks=masters_sem1_total_marks, masters_sem2_pointer=masters_sem2_pointer, masters_sem2_completion_date=masters_sem2_completion_date, masters_sem2_obtained_marks=masters_sem2_obtained_marks, masters_sem2_total_marks=masters_sem2_total_marks, masters_sem3_pointer=masters_sem3_pointer, masters_sem3_completion_date=masters_sem3_completion_date, masters_sem3_obtained_marks=masters_sem3_obtained_marks, masters_sem3_total_marks=masters_sem3_total_marks, masters_sem4_pointer=masters_sem4_pointer, masters_sem4_completion_date=masters_sem4_completion_date, masters_sem4_obtained_marks=masters_sem4_obtained_marks, masters_sem4_total_marks=masters_sem4_total_marks, masters_cgpa=masters_cgpa, masters_percent=masters_percent)
+            AcademicInfo.objects.create(student=student, tenth_percent=tenth_percent, tenth_completion_date=tenth_completion_date, tenth_obtained_marks=tenth_obtained_marks, tenth_total_marks=tenth_total_marks, twelveth_percent=twelveth_percent, twelveth_completion_date=twelveth_completion_date, twelveth_obtained_marks=twelveth_obtained_marks, twelveth_total_marks=twelveth_total_marks, diploma_percent=diploma_percent, diploma_completion_date=diploma_completion_date, diploma_obtained_marks=diploma_obtained_marks, diploma_total_marks=diploma_total_marks, sem1_pointer=sem1_pointer, sem1_completion_date=sem1_completion_date, sem1_obtained_marks=sem1_obtained_marks, sem1_total_marks=sem1_total_marks, sem2_pointer=sem2_pointer, sem2_completion_date=sem2_completion_date, sem2_obtained_marks=sem2_obtained_marks, sem2_total_marks=sem2_total_marks, sem3_pointer=sem3_pointer, sem3_completion_date=sem3_completion_date, sem3_obtained_marks=sem3_obtained_marks, sem3_total_marks=sem3_total_marks, sem4_pointer=sem4_pointer, sem4_completion_date=sem4_completion_date, sem4_obtained_marks=sem4_obtained_marks, sem4_total_marks=sem4_total_marks, sem5_pointer=sem5_pointer, sem5_completion_date=sem5_completion_date, sem5_obtained_marks=sem5_obtained_marks, sem5_total_marks=sem5_total_marks, sem6_pointer=sem6_pointer, sem6_completion_date=sem6_completion_date, sem6_obtained_marks=sem6_obtained_marks, sem6_total_marks=sem6_total_marks, sem7_pointer=sem7_pointer, sem7_completion_date=sem7_completion_date, sem7_obtained_marks=sem7_obtained_marks, sem7_total_marks=sem7_total_marks, sem8_pointer=sem8_pointer, sem8_completion_date=sem8_completion_date, sem8_obtained_marks=sem8_obtained_marks, sem8_total_marks=sem8_total_marks, cgpa=cgpa, be_percent=be_percent, masters_sem1_pointer=masters_sem1_pointer, masters_sem1_completion_date=masters_sem1_completion_date, masters_sem1_obtained_marks=masters_sem1_obtained_marks, masters_sem1_total_marks=masters_sem1_total_marks, masters_sem2_pointer=masters_sem2_pointer, masters_sem2_completion_date=masters_sem2_completion_date, masters_sem2_obtained_marks=masters_sem2_obtained_marks, masters_sem2_total_marks=masters_sem2_total_marks, masters_sem3_pointer=masters_sem3_pointer, masters_sem3_completion_date=masters_sem3_completion_date, masters_sem3_obtained_marks=masters_sem3_obtained_marks, masters_sem3_total_marks=masters_sem3_total_marks, masters_sem4_pointer=masters_sem4_pointer, masters_sem4_completion_date=masters_sem4_completion_date, masters_sem4_obtained_marks=masters_sem4_obtained_marks, masters_sem4_total_marks=masters_sem4_total_marks, masters_cgpa=masters_cgpa, masters_percent=masters_percent, livekt=livekt, deadkt=deadkt, gap=gap)
             context = {'status': 'Academic Record Added'}
         finally:
             return Response(context)
@@ -599,3 +606,33 @@ class ViewOtherInfo(APIView):
             return Response(response)
         except Exception as e:
             return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
+
+
+class Notifications(APIView):
+
+    def getNotificationObject(self, notification):
+        object = {
+            'batch': notification.job_opening.batch,
+            'valid_till': notification.job_opening.valid_till,
+            'branch': notification.job_opening.branch,
+            'tenth_percent': notification.job_opening.tenth_percent,
+            'twelveth_percent': notification.job_opening.twelveth_percent,
+            'cgpa': notification.job_opening.cgpa,
+            'notice': notification.job_opening.notice,
+            'package': notification.job_opening.package
+        }
+        return object
+
+    def post(self, request):
+        response = []
+        roll_no = request.data['roll_no'].strip()
+
+        try:
+            student = Student.objects.get(roll_no=roll_no)
+            notifications = EligibleStudents.objects.filter(student=student)
+            for notification in notifications:
+                response.append(self.getNotificationObject(notification))
+            return Response(response, status=200)
+
+        except Exception as e:
+            return Response({'status': 'error', 'error_msg': str(e)})
