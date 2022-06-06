@@ -190,10 +190,15 @@ class PlacementDetails(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     offer_letter_one = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     offer_letter_two = models.ImageField(upload_to='offerLetter', default=None, blank=True)
+    offer_letter_three = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     placed_org_one = models.CharField(max_length=50, null=True, blank=True)
     placed_org_two = models.CharField(max_length=50, null=True, blank=True)
+    placed_org_three = models.CharField(max_length=50, null=True, blank=True)
     package_one = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     package_two = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
+    package_three = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
+    placed_company = models.CharField(max_length=50, null=True, blank=True)
+    placed_package = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
 
     def __str__(self):
         return self.student.roll_no

@@ -313,10 +313,15 @@ class AddPlacementDetails(APIView):
         roll_no = request.data['roll_no'].strip()
         offer_letter_one = GetData.getData(self, request, offer_letter_one, File=True)
         offer_letter_two = GetData.getData(self, request, offer_letter_two, File=True)
+        offer_letter_three = GetData.getData(self, request, offer_letter_three, File=True)
         placed_org_one = GetData.getData(self, request, placed_org_one)
         placed_org_two = GetData.getData(self, request, placed_org_two)
+        placed_org_three = GetData.getData(self, request, placed_org_three)
         package_one = GetData.getData(self, request, package_one, Decimal=True)
         package_two = GetData.getData(self, request, package_two, Decimal=True)
+        package_three = GetData.getData(self, request, package_three, Decimal=True)
+        placed_company = GetData.getData(self, request, placed_company)
+        placed_package = GetData.getData(self, request, placed_package, Decimal=True)
 
         try:
             student = Student.objects.get(roll_no=roll_no)
@@ -327,14 +332,19 @@ class AddPlacementDetails(APIView):
             placementRecord = PlacementDetails.objects.get(student=student)
             placementRecord.offer_letter_one = offer_letter_one
             placementRecord.offer_letter_two = offer_letter_two
+            placementRecord.offer_letter_three = offer_letter_three
             placementRecord.placed_org_one = placed_org_one
             placementRecord.placed_org_two = placed_org_two
+            placementRecord.placed_org_three = placed_org_three
             placementRecord.package_one = package_one
             placementRecord.package_two = package_two
-            placementRecord.save(update_fields=['offer_letter_one', 'offer_letter_two', 'placed_org_one', 'placed_org_two', 'package_one', 'package_two'])
+            placementRecord.package_three = package_three
+            placementRecord.placed_company = placed_company
+            placementRecord.placed_package = placed_package
+            placementRecord.save(update_fields=['offer_letter_one', 'offer_letter_two', 'offer_letter_three', 'placed_org_one', 'placed_org_two', 'placed_org_three', 'package_one', 'package_two', 'package_three', 'placed_company', 'placed_package'])
             context = {'status': 'Placement Record Updated'}
         except:
-            PlacementDetails.objects.create(student=student, offer_letter_one=offer_letter_one, offer_letter_two=offer_letter_two, placed_org_one=placed_org_one, placed_org_two=placed_org_two, package_one=package_one, package_two=package_two)
+            PlacementDetails.objects.create(student=student, offer_letter_one=offer_letter_one, offer_letter_two=offer_letter_two, offer_letter_three=offer_letter_three, placed_org_one=placed_org_one, placed_org_two=placed_org_two, placed_org_three=placed_org_three, package_one=package_one, package_two=package_two, package_three=package_three, placed_company=placed_company, placed_package=placed_package)
             context = {'status': 'Placement Record Added'}
         finally:
             return Response(context)
@@ -571,14 +581,23 @@ class ViewPlacementDetails(APIView):
                 offer_letter_two = placement_details.offer_letter_two.url
             except:
                 offer_letter_two = ''
+            try:
+                offer_letter_three = placement_details.offer_letter_three.url
+            except:
+                offer_letter_three = ''
             response = {
                 'roll_no': placement_details.student.roll_no,
                 'offer_letter_one': offer_letter_one,
                 'offer_letter_two': offer_letter_two,
+                'offer_letter_three': offer_letter_three,
                 'placed_org_one': placement_details.placed_org_one,
                 'placed_org_two': placement_details.placed_org_two,
+                'placed_org_three': placement_details.placed_org_three,
                 'package_one': placement_details.package_one,
-                'package_two': placement_details.package_two
+                'package_two': placement_details.package_two,
+                'package_three': placement_details.package_three,
+                'placed_company': placement_details.placed_company,
+                'placed_package': placement_details.placed_package
             }
             return Response(response)
         except Exception as e:
