@@ -1,20 +1,23 @@
-FROM python:3.7-alpine3.12
+FROM python:3.7
 
 COPY requirements.txt /app/requirements.txt
 
 RUN set -ex \
     && pip install --upgrade pip \
-    && apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl \
-    && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
+    # && apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl \
+    # && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
     && pip install Pillow \
+    && pip install pymysql \
+    && pip install numpy \
+    && pip install pandas \
     && pip install --no-cache-dir -r /app/requirements.txt
 
 WORKDIR /app
 
 ADD . .
 
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+# RUN python manage.py makemigrations
+# RUN python manage.py migrate
 
 # For Local Deployment
 # EXPOSE 8000

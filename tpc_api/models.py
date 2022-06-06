@@ -33,7 +33,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
         ('F', 'F')
     )
 
-    roll_no = models.CharField(max_length=10, unique=True)
+    roll_no = models.CharField(max_length=10, primary_key=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
@@ -64,7 +64,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
 
 
 class AcademicInfo(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     # SSC
     tenth_percent = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     tenth_completion_date = models.CharField(max_length=20, null=True, blank=True)
@@ -148,7 +148,7 @@ class AcademicInfo(models.Model):
 
 
 class SkillSet(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     certificate_one = models.ImageField(upload_to='certificate', default=None, blank=True)
     certificate_two = models.ImageField(upload_to='certificate', default=None, blank=True)
     certificate_three = models.ImageField(upload_to='certificate', default=None, blank=True)
@@ -168,7 +168,7 @@ class SkillSet(models.Model):
 
 
 class Experience(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     internship_one = models.CharField(max_length=1000, null=True, blank=True)
     internship_two = models.CharField(max_length=1000, null=True, blank=True)
     internship_three = models.CharField(max_length=1000, null=True, blank=True)
@@ -187,7 +187,7 @@ class Experience(models.Model):
 
 
 class PlacementDetails(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     offer_letter_one = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     offer_letter_two = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     placed_org_one = models.CharField(max_length=50, null=True, blank=True)
@@ -204,7 +204,7 @@ class PlacementDetails(models.Model):
 
 
 class OtherInfo(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     hobbies = models.CharField(max_length=1000, null=True, blank=True)
     pos_of_res_one = models.CharField(max_length=50, null=True, blank=True)
     pos_of_res_two = models.CharField(max_length=50, null=True, blank=True)
@@ -235,11 +235,11 @@ class Admin(models.Model):
 
 
 class EligibleStudents(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    job_opening = models.ForeignKey(JobOpening, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, db_column='roll_no')
+    job_opening = models.ForeignKey(JobOpening, on_delete=models.CASCADE, db_column='job_id')
 
     def __str__(self):
-        return self.student.roll_no + ' ' + str(self.job_opening.id)
+        return self.student.roll_no + ' ' + str(self.job_opening.job_id)
 
     class Meta:
         verbose_name_plural = "Eligible Students"

@@ -1,6 +1,7 @@
 from django.db import models
 
 class JobOpening(models.Model):
+    job_id = models.AutoField(primary_key=True)
     email = models.CharField(max_length=50, null=True, blank=True)
     batch = models.IntegerField(null=True, blank=True)
     valid_till = models.CharField(max_length=50, null=True, blank=True)
