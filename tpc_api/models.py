@@ -56,7 +56,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['password']
 
     def __str__(self):
-        return self.roll_no + ' ' + self.rait_email
+        return self.roll_no
 
     class Meta:
         verbose_name_plural = "Student"
@@ -149,14 +149,14 @@ class AcademicInfo(models.Model):
 
 class SkillSet(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
-    certificate_one = models.ImageField(upload_to='certificate', default=None, blank=True)
-    certificate_two = models.ImageField(upload_to='certificate', default=None, blank=True)
-    certificate_three = models.ImageField(upload_to='certificate', default=None, blank=True)
-    certificate_four = models.ImageField(upload_to='certificate', default=None, blank=True)
-    acad_achievement_one = models.CharField(max_length=50, null=True, blank=True)
-    acad_achievement_two = models.CharField(max_length=50, null=True, blank=True)
-    acad_achievement_three = models.CharField(max_length=50, null=True, blank=True)
-    acad_achievement_four = models.CharField(max_length=50, null=True, blank=True)
+    certificate_one = models.CharField(max_length=200, null=True, blank=True)
+    certificate_two = models.CharField(max_length=200, null=True, blank=True)
+    certificate_three = models.CharField(max_length=200, null=True, blank=True)
+    certificate_four = models.CharField(max_length=200, null=True, blank=True)
+    acad_achievement_one = models.CharField(max_length=200, null=True, blank=True)
+    acad_achievement_two = models.CharField(max_length=200, null=True, blank=True)
+    acad_achievement_three = models.CharField(max_length=200, null=True, blank=True)
+    acad_achievement_four = models.CharField(max_length=200, null=True, blank=True)
     career_obj = models.CharField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
@@ -191,9 +191,9 @@ class PlacementDetails(models.Model):
     offer_letter_one = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     offer_letter_two = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     offer_letter_three = models.ImageField(upload_to='offerLetter', default=None, blank=True)
-    placed_org_one = models.CharField(max_length=50, null=True, blank=True)
-    placed_org_two = models.CharField(max_length=50, null=True, blank=True)
-    placed_org_three = models.CharField(max_length=50, null=True, blank=True)
+    placed_org_one = models.CharField(max_length=100, null=True, blank=True)
+    placed_org_two = models.CharField(max_length=100, null=True, blank=True)
+    placed_org_three = models.CharField(max_length=100, null=True, blank=True)
     package_one = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     package_two = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     package_three = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
@@ -211,10 +211,10 @@ class PlacementDetails(models.Model):
 class OtherInfo(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     hobbies = models.CharField(max_length=1000, null=True, blank=True)
-    pos_of_res_one = models.CharField(max_length=50, null=True, blank=True)
-    pos_of_res_two = models.CharField(max_length=50, null=True, blank=True)
-    pos_of_res_three = models.CharField(max_length=50, null=True, blank=True)
-    pos_of_res_four = models.CharField(max_length=50, null=True, blank=True)
+    pos_of_res_one = models.CharField(max_length=100, null=True, blank=True)
+    pos_of_res_two = models.CharField(max_length=100, null=True, blank=True)
+    pos_of_res_three = models.CharField(max_length=100, null=True, blank=True)
+    pos_of_res_four = models.CharField(max_length=100, null=True, blank=True)
     extracuricular_one = models.CharField(max_length=500, null=True, blank=True)
     extracuricular_two = models.CharField(max_length=500, null=True, blank=True)
     extracuricular_three = models.CharField(max_length=500, null=True, blank=True)

@@ -2,6 +2,8 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import *
+from rest_framework_simplejwt.backends import TokenBackend
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 class GetData:
@@ -235,10 +237,10 @@ class AddSkillSet(APIView):
 
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
-        certificate_one = GetData.getData(self, request, 'certificate_one', File=True)
-        certificate_two = GetData.getData(self, request, 'certificate_two', File=True)
-        certificate_three = GetData.getData(self, request, 'certificate_three', File=True)
-        certificate_four = GetData.getData(self, request, 'certificate_four', File=True)
+        certificate_one = GetData.getData(self, request, 'certificate_one')
+        certificate_two = GetData.getData(self, request, 'certificate_two')
+        certificate_three = GetData.getData(self, request, 'certificate_three')
+        certificate_four = GetData.getData(self, request, 'certificate_four')
         acad_achievement_one = GetData.getData(self, request, 'acad_achievement_one')
         acad_achievement_two = GetData.getData(self, request, 'acad_achievement_two')
         acad_achievement_three = GetData.getData(self, request, 'acad_achievement_three')
@@ -508,28 +510,12 @@ class ViewSkillSet(APIView):
         try:
             student = Student.objects.get(roll_no=roll_no)
             skillset = SkillSet.objects.get(student=student)
-            try:
-                certificate_one = skillset.certificate_one.url
-            except:
-                certificate_one = ''
-            try:
-                certificate_two = skillset.certificate_two.url
-            except:
-                certificate_two = ''
-            try:
-                certificate_three = skillset.certificate_three.url
-            except:
-                certificate_three = ''
-            try:
-                certificate_four = skillset.certificate_four.url
-            except:
-                certificate_four = ''
             response = {
                 'roll_no': skillset.student.roll_no,
-                'certificate_one': certificate_one,
-                'certificate_two': certificate_two,
-                'certificate_three': certificate_three,
-                'certificate_four': certificate_four,
+                'certificate_one': skillset.certificate_one,
+                'certificate_two': skillset.certificate_two,
+                'certificate_three': skillset.certificate_three,
+                'certificate_four': skillset.certificate_four,
                 'acad_achievement_one': skillset.acad_achievement_one,
                 'acad_achievement_two': skillset.acad_achievement_two,
                 'acad_achievement_three': skillset.acad_achievement_three,
@@ -643,6 +629,7 @@ class Notifications(APIView):
         return object
 
     def post(self, request):
+        print(request.user)
         response = []
         roll_no = request.data['roll_no'].strip()
 
