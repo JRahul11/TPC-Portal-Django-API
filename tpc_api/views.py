@@ -2,8 +2,6 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import *
-from rest_framework_simplejwt.backends import TokenBackend
-from rest_framework_simplejwt.tokens import AccessToken
 
 
 class GetData:
@@ -313,17 +311,17 @@ class AddPlacementDetails(APIView):
 
     def post(self, request):
         roll_no = request.data['roll_no'].strip()
-        offer_letter_one = GetData.getData(self, request, offer_letter_one, File=True)
-        offer_letter_two = GetData.getData(self, request, offer_letter_two, File=True)
-        offer_letter_three = GetData.getData(self, request, offer_letter_three, File=True)
-        placed_org_one = GetData.getData(self, request, placed_org_one)
-        placed_org_two = GetData.getData(self, request, placed_org_two)
-        placed_org_three = GetData.getData(self, request, placed_org_three)
-        package_one = GetData.getData(self, request, package_one, Decimal=True)
-        package_two = GetData.getData(self, request, package_two, Decimal=True)
-        package_three = GetData.getData(self, request, package_three, Decimal=True)
-        placed_company = GetData.getData(self, request, placed_company)
-        placed_package = GetData.getData(self, request, placed_package, Decimal=True)
+        offer_letter_one = GetData.getData(self, request, 'offer_letter_one', File=True)
+        offer_letter_two = GetData.getData(self, request, 'offer_letter_two', File=True)
+        offer_letter_three = GetData.getData(self, request, 'offer_letter_three', File=True)
+        placed_org_one = GetData.getData(self, request, 'placed_org_one')
+        placed_org_two = GetData.getData(self, request, 'placed_org_two')
+        placed_org_three = GetData.getData(self, request, 'placed_org_three')
+        package_one = GetData.getData(self, request, 'package_one', Decimal=True)
+        package_two = GetData.getData(self, request, 'package_two', Decimal=True)
+        package_three = GetData.getData(self, request, 'package_three', Decimal=True)
+        placed_company = GetData.getData(self, request, 'placed_company')
+        placed_package = GetData.getData(self, request, 'placed_package', Decimal=True)
 
         try:
             student = Student.objects.get(roll_no=roll_no)
@@ -629,7 +627,6 @@ class Notifications(APIView):
         return object
 
     def post(self, request):
-        print(request.user)
         response = []
         roll_no = request.data['roll_no'].strip()
 
