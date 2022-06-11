@@ -1,5 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import Group
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -46,6 +47,7 @@ class DummyStudentSignUp(APIView):
         roll_no = request.data['roll_no']
         rait_email = request.data['rait_email']
         password = request.data['password']
+        role = request.data['role']
         
         try:
             student = Student.objects.get(roll_no=roll_no)
@@ -55,7 +57,13 @@ class DummyStudentSignUp(APIView):
                 }
             )
         except:
-            Student.objects.create(roll_no=roll_no, rait_email=rait_email, password=make_password(password))
+            student = Student.objects.create(roll_no=roll_no, rait_email=rait_email, password=make_password(password))
+            if role == 'Student':
+                studentGroup = Group.objects.get(name ='Student')
+                student.groups.add(studentGroup)
+            elif role == 'Superuser':
+                studentGroup = Group.objects.get(name ='Superuser')
+                student.groups.add(studentGroup)
             return Response(
                 {
                     'status': 'Student Added'

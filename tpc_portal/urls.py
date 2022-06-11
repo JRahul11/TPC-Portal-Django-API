@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from auth_api.groups import CustomGroups
 
 urlpatterns = [
     # Admin Panel URL
@@ -23,3 +24,5 @@ urlpatterns = [
     path('company/', include('company.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+CustomGroups.getOrCreateGroups()

@@ -149,10 +149,19 @@ class AcademicInfo(models.Model):
 
 class SkillSet(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
+    # Certification 1
     certificate_one = models.CharField(max_length=200, null=True, blank=True)
+    certificate_one_completion_date = models.CharField(max_length=20, null=True, blank=True)
+    # Certification 2
     certificate_two = models.CharField(max_length=200, null=True, blank=True)
+    certificate_two_completion_date = models.CharField(max_length=20, null=True, blank=True)
+    # Certification 3
     certificate_three = models.CharField(max_length=200, null=True, blank=True)
+    certificate_three_completion_date = models.CharField(max_length=20, null=True, blank=True)
+    # Certification 4
     certificate_four = models.CharField(max_length=200, null=True, blank=True)
+    certificate_four_completion_date = models.CharField(max_length=20, null=True, blank=True)
+    # Academic Achievements
     acad_achievement_one = models.CharField(max_length=200, null=True, blank=True)
     acad_achievement_two = models.CharField(max_length=200, null=True, blank=True)
     acad_achievement_three = models.CharField(max_length=200, null=True, blank=True)
@@ -169,12 +178,37 @@ class SkillSet(models.Model):
 
 class Experience(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
-    internship_one = models.CharField(max_length=1000, null=True, blank=True)
-    internship_two = models.CharField(max_length=1000, null=True, blank=True)
-    internship_three = models.CharField(max_length=1000, null=True, blank=True)
-    project_one = models.CharField(max_length=1000, null=True, blank=True)
-    project_two = models.CharField(max_length=1000, null=True, blank=True)
-    project_three = models.CharField(max_length=1000, null=True, blank=True)
+    # Internship 1
+    internship_one_title = models.CharField(max_length=100, null=True, blank=True)
+    internship_one_description = models.CharField(max_length=1000, null=True, blank=True)
+    internship_one_start_date = models.CharField(max_length=20, null=True, blank=True)
+    internship_one_end_date = models.CharField(max_length=20, null=True, blank=True)
+    # Internship 2
+    internship_two_title = models.CharField(max_length=100, null=True, blank=True)
+    internship_two_description = models.CharField(max_length=1000, null=True, blank=True)
+    internship_two_start_date = models.CharField(max_length=20, null=True, blank=True)
+    internship_two_end_date = models.CharField(max_length=20, null=True, blank=True)
+    # Internship 3
+    internship_three_title = models.CharField(max_length=100, null=True, blank=True)
+    internship_three_description = models.CharField(max_length=1000, null=True, blank=True)
+    internship_three_start_date = models.CharField(max_length=20, null=True, blank=True)
+    internship_three_end_date = models.CharField(max_length=20, null=True, blank=True)
+    # Project 1
+    project_one_title = models.CharField(max_length=100, null=True, blank=True)
+    project_one_description = models.CharField(max_length=1000, null=True, blank=True)
+    project_one_start_date = models.CharField(max_length=20, null=True, blank=True)
+    project_one_end_date = models.CharField(max_length=20, null=True, blank=True)
+    # Project 2
+    project_two_title = models.CharField(max_length=100, null=True, blank=True)
+    project_two_description = models.CharField(max_length=1000, null=True, blank=True)
+    project_two_start_date = models.CharField(max_length=20, null=True, blank=True)
+    project_two_end_date = models.CharField(max_length=20, null=True, blank=True)
+    # Project 3
+    project_three_title = models.CharField(max_length=100, null=True, blank=True)
+    project_three_description = models.CharField(max_length=1000, null=True, blank=True)
+    project_three_start_date = models.CharField(max_length=20, null=True, blank=True)
+    project_three_end_date = models.CharField(max_length=20, null=True, blank=True)
+
     pref_lang = models.CharField(max_length=50, null=True, blank=True)
     technologies = models.CharField(max_length=1000, null=True, blank=True)
 
@@ -188,15 +222,19 @@ class Experience(models.Model):
 
 class PlacementDetails(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
+    # Offer Letters
     offer_letter_one = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     offer_letter_two = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     offer_letter_three = models.ImageField(upload_to='offerLetter', default=None, blank=True)
+    # Organizations Options
     placed_org_one = models.CharField(max_length=100, null=True, blank=True)
     placed_org_two = models.CharField(max_length=100, null=True, blank=True)
     placed_org_three = models.CharField(max_length=100, null=True, blank=True)
+    # Packages Options
     package_one = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     package_two = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
     package_three = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
+    # Selected Organization
     placed_company = models.CharField(max_length=50, null=True, blank=True)
     placed_package = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
 
@@ -211,10 +249,12 @@ class PlacementDetails(models.Model):
 class OtherInfo(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     hobbies = models.CharField(max_length=1000, null=True, blank=True)
+    # Position of Responsibility
     pos_of_res_one = models.CharField(max_length=100, null=True, blank=True)
     pos_of_res_two = models.CharField(max_length=100, null=True, blank=True)
     pos_of_res_three = models.CharField(max_length=100, null=True, blank=True)
     pos_of_res_four = models.CharField(max_length=100, null=True, blank=True)
+    # Extracurricular Activities
     extracuricular_one = models.CharField(max_length=500, null=True, blank=True)
     extracuricular_two = models.CharField(max_length=500, null=True, blank=True)
     extracuricular_three = models.CharField(max_length=500, null=True, blank=True)
