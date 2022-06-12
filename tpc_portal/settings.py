@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'node_api',
     'superuser',
     'company',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
