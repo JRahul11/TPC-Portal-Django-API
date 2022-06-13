@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    # 'csp.middleware.CSPMiddleware',
+    'csp.middleware.CSPMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -187,4 +187,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DRF_API_LOGGER_DATABASE = True
 
 CSP_DEFAULT_SRC = ["'none'"]
-CSP_IMG_SRC = ["'self'"]
+CSP_STYLE_SRC = ("'self'")
+CSP_SCRIPT_SRC = ("'self'")
+CSP_FONT_SRC = ("'self'", )
+CSP_IMG_SRC = ("'self'")
+CSP_MEDIA_SRC = ("'self'")
+
