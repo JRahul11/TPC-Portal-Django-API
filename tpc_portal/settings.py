@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 from datetime import timedelta
+#for db
+import dj_database_url 
+
+db_from_env = dj_database_url.config(conn_max_age = 600)
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -84,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tpc_database',
         'USER': 'root',  # Change this to your username
-        'PASSWORD': 'abc456',  # Change this to your password
+        'PASSWORD': '06052001sss',  # Change this to your password
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -179,6 +184,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
 
