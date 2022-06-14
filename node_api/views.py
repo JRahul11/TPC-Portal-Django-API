@@ -28,12 +28,12 @@ class GetAllStudents(APIView):
 class GetStudentByRollNo(APIView):
 
     def post(self, request):
-        roll_no = request.data['roll_no']
+        user_roll_no = request.data['roll_no']
         jwt_roll_no = request.user.roll_no.strip()
         userRecord = Student.objects.get(roll_no=jwt_roll_no)
 
-        if userRecord.groups.filter(name='Superuser'):
-            url = "https://tpc-backend-node.herokuapp.com/filter/" + roll_no
+        if (user_roll_no == jwt_roll_no and userRecord.groups.filter(name='Student')) or (userRecord.groups.filter(name='Superuser')):
+            url = "https://tpc-backend-node.herokuapp.com/filter/" + user_roll_no
             payload = {}
             headers = {}
             response = requests.request("GET", url, headers=headers, data=payload)
@@ -68,12 +68,12 @@ class GetStudentsByDept(APIView):
 class GetStudentProfile(APIView):
 
     def post(self, request):
-        roll_no = request.data['roll_no']
+        user_roll_no = request.data['roll_no']
         jwt_roll_no = request.user.roll_no.strip()
         userRecord = Student.objects.get(roll_no=jwt_roll_no)
 
-        if userRecord.groups.filter(name='Superuser'):
-            url = "https://tpc-backend-node.herokuapp.com/filter/profile/" + roll_no
+        if (user_roll_no == jwt_roll_no and userRecord.groups.filter(name='Student')) or (userRecord.groups.filter(name='Superuser')):
+            url = "https://tpc-backend-node.herokuapp.com/filter/profile/" + user_roll_no
             payload = ""
             headers = {}
             response = requests.request("GET", url, headers=headers, data=payload)

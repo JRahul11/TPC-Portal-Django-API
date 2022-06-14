@@ -17,12 +17,16 @@ class StudentLogin(APIView):
         try:
             student = Student.objects.get(rait_email=rait_email)
             if check_password(password, student.password):
+                roleList = []
+                for role in student.groups.all():
+                    roleList.append(role.name)
                 refresh = RefreshToken.for_user(student)
                 access = str(refresh.access_token)
                 response = Response(
                     {
-                        'status': 'User Logged In', 
-                        'refresh': str(refresh), 
+                        'status': 'User Logged In',
+                        'role': roleList,
+                        'refresh': str(refresh),
                         'access': access
                     }
                 )
@@ -53,7 +57,7 @@ class DummyStudentSignUp(APIView):
             student = Student.objects.get(roll_no=roll_no)
             return Response(
                 {
-                    'status': 'Student Exists'
+                    'status': role + ' Exists'
                 }
             )
         except:
@@ -66,6 +70,6 @@ class DummyStudentSignUp(APIView):
                 student.groups.add(studentGroup)
             return Response(
                 {
-                    'status': 'Student Added'
+                    'status': role + ' Added'
                 }
             )

@@ -18,6 +18,7 @@ class AddBatchViaExcel(APIView):
             excelFile = request.FILES['excelFile']
             df = pd.read_excel(excelFile, engine='openpyxl').fillna('')
             studentData = df[['roll_no', 'birth_date']]
+            studentGroup = Group.objects.get(name ='Student')
 
             for row in range(0, len(studentData)):
                 if studentData.iloc[row]['roll_no'] != '' and studentData.iloc[row]['birth_date'] != '':
@@ -27,7 +28,6 @@ class AddBatchViaExcel(APIView):
                         student = Student.objects.get(roll_no=roll_no)
                     except:
                         student = Student.objects.create(roll_no=roll_no, rait_email=roll_no, password=make_password(birth_date))
-                        studentGroup = Group.objects.get(name ='Student')
                         student.groups.add(studentGroup)
 
             return Response({'Status': 'Success'})
