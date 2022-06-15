@@ -44,7 +44,8 @@ class Student(AbstractBaseUser, PermissionsMixin):
     linkedin = models.CharField(max_length=50, null=True, blank=True)
     no_of_offers = models.IntegerField(null=True, blank=True)
     password = models.CharField(max_length=100, default="dypatil@123")
-    photo = models.ImageField(upload_to='studentPhoto', default=None, blank=True)
+    photo = models.BinaryField(null=True, blank=True, editable=True)
+    # photo = models.ImageField(upload_to='studentPhoto', default=None, blank=True)
     department = models.CharField(max_length=50, null=True, blank=True)
     batch = models.IntegerField(null=True, blank=True)
     rait_email = models.CharField(max_length=50, null=True, blank=True, unique=True)
@@ -223,9 +224,12 @@ class Experience(models.Model):
 class PlacementDetails(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     # Offer Letters
-    offer_letter_one = models.ImageField(upload_to='offerLetter', default=None, blank=True)
-    offer_letter_two = models.ImageField(upload_to='offerLetter', default=None, blank=True)
-    offer_letter_three = models.ImageField(upload_to='offerLetter', default=None, blank=True)
+    offer_letter_one = models.BinaryField(null=True, blank=True, editable=True)
+    offer_letter_two = models.BinaryField(null=True, blank=True, editable=True)
+    offer_letter_three = models.BinaryField(null=True, blank=True, editable=True)
+    # offer_letter_one = models.ImageField(upload_to='offerLetter', default=None, blank=True)
+    # offer_letter_two = models.ImageField(upload_to='offerLetter', default=None, blank=True)
+    # offer_letter_three = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     # Organizations Options
     placed_org_one = models.CharField(max_length=100, null=True, blank=True)
     placed_org_two = models.CharField(max_length=100, null=True, blank=True)

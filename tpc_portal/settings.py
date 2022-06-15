@@ -1,9 +1,6 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-#for db
-
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -87,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tpc_database',
         'USER': 'root',  # Change this to your username
-        'PASSWORD': '06052001sss',  # Change this to your password
+        'PASSWORD': 'abc456',  # Change this to your password
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -102,14 +99,6 @@ DATABASES = {
 #         'PASSWORD': 'tpcadmin',  # Change this to your password
 #         'HOST': 'tpc-database.cvr5t5yxt7tj.us-east-1.rds.amazonaws.com',
 #         'PORT': '3306',
-#     }
-# }
-
-# Heroku Configuration
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
@@ -175,20 +164,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = '/static/'
 
+STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
 
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 DRF_API_LOGGER_DATABASE = True
+
 
 CSP_DEFAULT_SRC = ["'none'"]
 CSP_STYLE_SRC = ("'self'")
@@ -196,4 +189,3 @@ CSP_SCRIPT_SRC = ("'self'")
 CSP_FONT_SRC = ("'self'", )
 CSP_IMG_SRC = ("'self'")
 CSP_MEDIA_SRC = ("'self'")
-

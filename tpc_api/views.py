@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import *
+import base64
 
 
 class GetData:
@@ -12,7 +13,7 @@ class GetData:
             elif Integer:
                 return int(request.data[field])
             elif File:
-                return request.FILES[field]
+                return base64.b64encode(request.FILES[field].file.read())
             else:
                 return request.data[field]
         except:
@@ -477,10 +478,10 @@ class ViewStudent(APIView):
         if (user_roll_no == jwt_roll_no and userRecord.groups.filter(name='Student')) or (userRecord.groups.filter(name='Superuser')):
             try:
                 student = Student.objects.get(roll_no=user_roll_no)
-                try:
-                    photo = student.photo.url
-                except:
-                    photo = ''
+                # try:
+                #     photo = student.photo.url
+                # except:
+                #     photo = ''
                 response = {
                     'roll_no': student.roll_no,
                     'first_name': student.first_name,
@@ -492,7 +493,7 @@ class ViewStudent(APIView):
                     'github': student.github,
                     'linkedin': student.linkedin,
                     'no_of_offers': student.no_of_offers,
-                    'photo': photo,
+                    'photo': student.photo,
                     'department': student.department,
                     'batch': student.batch,
                     'rait_email': student.rait_email
@@ -681,23 +682,23 @@ class ViewPlacementDetails(APIView):
             try:
                 student = Student.objects.get(roll_no=user_roll_no)
                 placement_details = PlacementDetails.objects.get(student=student)
-                try:
-                    offer_letter_one = placement_details.offer_letter_one.url
-                except:
-                    offer_letter_one = ''
-                try:
-                    offer_letter_two = placement_details.offer_letter_two.url
-                except:
-                    offer_letter_two = ''
-                try:
-                    offer_letter_three = placement_details.offer_letter_three.url
-                except:
-                    offer_letter_three = ''
+                # try:
+                #     offer_letter_one = placement_details.offer_letter_one.url
+                # except:
+                #     offer_letter_one = ''
+                # try:
+                #     offer_letter_two = placement_details.offer_letter_two.url
+                # except:
+                #     offer_letter_two = ''
+                # try:
+                #     offer_letter_three = placement_details.offer_letter_three.url
+                # except:
+                #     offer_letter_three = ''
                 response = {
                     'roll_no': placement_details.student.roll_no,
-                    'offer_letter_one': offer_letter_one,
-                    'offer_letter_two': offer_letter_two,
-                    'offer_letter_three': offer_letter_three,
+                    'offer_letter_one': placement_details.offer_letter_one,
+                    'offer_letter_two': placement_details.offer_letter_two,
+                    'offer_letter_three': placement_details.offer_letter_three,
                     'placed_org_one': placement_details.placed_org_one,
                     'placed_org_two': placement_details.placed_org_two,
                     'placed_org_three': placement_details.placed_org_three,
