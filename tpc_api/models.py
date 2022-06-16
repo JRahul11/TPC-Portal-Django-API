@@ -57,7 +57,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['password']
 
     def __str__(self):
-        return self.roll_no
+        return self.roll_no + ' ' + self.rait_email
 
     class Meta:
         verbose_name_plural = "Student"
@@ -224,9 +224,9 @@ class Experience(models.Model):
 class PlacementDetails(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, primary_key=True, db_column='roll_no')
     # Offer Letters
-    offer_letter_one = models.BinaryField(null=True, blank=True, editable=True)
-    offer_letter_two = models.BinaryField(null=True, blank=True, editable=True)
-    offer_letter_three = models.BinaryField(null=True, blank=True, editable=True)
+    offer_letter_one = models.TextField(null=True, blank=True)
+    offer_letter_two = models.TextField(null=True, blank=True)
+    offer_letter_three = models.TextField(null=True, blank=True)
     # offer_letter_one = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     # offer_letter_two = models.ImageField(upload_to='offerLetter', default=None, blank=True)
     # offer_letter_three = models.ImageField(upload_to='offerLetter', default=None, blank=True)

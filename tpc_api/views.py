@@ -493,7 +493,9 @@ class ViewStudent(APIView):
                     'github': student.github,
                     'linkedin': student.linkedin,
                     'no_of_offers': student.no_of_offers,
+                    'password': student.password,
                     'photo': student.photo,
+                    # 'photo': student.photo[2:-1],
                     'department': student.department,
                     'batch': student.batch,
                     'rait_email': student.rait_email
