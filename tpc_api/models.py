@@ -44,7 +44,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     linkedin = models.CharField(max_length=50, null=True, blank=True)
     no_of_offers = models.IntegerField(null=True, blank=True)
     password = models.CharField(max_length=100, default="dypatil@123")
-    photo = models.BinaryField(null=True, blank=True, editable=True)
+    photo = models.CharField(max_length=100, null=True, blank=True)
     # photo = models.ImageField(upload_to='studentPhoto', default=None, blank=True)
     department = models.CharField(max_length=50, null=True, blank=True)
     batch = models.IntegerField(null=True, blank=True)
