@@ -6,9 +6,9 @@ from .views import *
 
 urlpatterns = [
 
-    path('studentLogin/', StudentLogin.as_view(), name='studentLogin'),
+    path('studentLogin/', StudentLogin.as_view()),
 
-    path('dummyStudentSignUp/', DummyStudentSignUp.as_view(), name='dummyStudentSignUp'),
+    path('dummyStudentSignUp/', DummyStudentSignUp.as_view()),
 
     path('studentLogin/tokenRefresh/', TokenRefreshView.as_view()),
 

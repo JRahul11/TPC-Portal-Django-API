@@ -5,6 +5,8 @@ from .views import *
 
 urlpatterns = [
 
-    path('addBatchViaExcel/', AddBatchViaExcel.as_view(), name='addBatchViaExcel'),
+    path('addBatchViaExcel/', AddBatchViaExcel.as_view()),
+    
+    path('addPlacedStudents/', AddPlacedStudents.as_view())
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -37,7 +37,7 @@ class Student(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50, null=True, blank=True)
     middle_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
-    email = models.CharField(max_length=50, null=True, blank=True, unique=True)
+    email = models.CharField(max_length=50, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     gender = models.CharField(max_length=10, choices=gender_choices, null=True, blank=True)
     github = models.CharField(max_length=50, null=True, blank=True)
