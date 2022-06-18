@@ -40,7 +40,10 @@ class AddStudent(APIView):
         github = GetData.getData(self, request, 'github')
         linkedin = GetData.getData(self, request, 'linkedin')
         no_of_offers = GetData.getData(self, request, 'no_of_offers', Integer=True)
-        password = make_password(request.data['password'])
+        flag = False
+        if not request.data['password'].startswith('pbkdf2_sha256'):
+            password = make_password(request.data['password'])
+            flag = True
         photo = GetData.getData(self, request, 'photo', File=True)
         department = request.data['department']
         batch = int(request.data['batch'])
@@ -60,12 +63,15 @@ class AddStudent(APIView):
                 student.github = github
                 student.linkedin = linkedin
                 student.no_of_offers = no_of_offers
-                student.password = password
                 student.photo = photo
                 student.department = department
                 student.batch = batch
                 student.rait_email = rait_email
-                student.save(update_fields=['first_name', 'middle_name', 'last_name', 'email', 'phone_number', 'gender', 'github', 'linkedin', 'no_of_offers', 'password', 'photo', 'department', 'batch', 'rait_email'])
+                update_fields = ['first_name', 'middle_name', 'last_name', 'email', 'phone_number', 'gender', 'github', 'linkedin', 'no_of_offers', 'photo', 'department', 'batch', 'rait_email']
+                if flag == True:
+                    student.password = password
+                    update_fields.append('password')
+                student.save(update_fields=update_fields)
                 context = {'status': 'Student Record Updated'}
             else:
                 context = {'status': 'Error', 'message': 'Insufficient Permissions to perform the request'}

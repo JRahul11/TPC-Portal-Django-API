@@ -25,6 +25,7 @@ class StudentLogin(APIView):
                 response = Response(
                     {
                         'status': 'User Logged In',
+                        'roll_no': student.roll_no,
                         'role': roleList,
                         'refresh': str(refresh),
                         'access': access
