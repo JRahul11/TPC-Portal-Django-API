@@ -1,3 +1,4 @@
+from turtle import up
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -40,11 +41,14 @@ class AddStudent(APIView):
         github = GetData.getData(self, request, 'github')
         linkedin = GetData.getData(self, request, 'linkedin')
         no_of_offers = GetData.getData(self, request, 'no_of_offers', Integer=True)
-        flag = False
-        if not request.data['password'].startswith('pbkdf2_sha256'):
-            password = make_password(request.data['password'])
-            flag = True
+        password = request.data['password']
+        passwordFlag = True
+        if password.startswith('pbkdf2_sha256') or password == '':
+            passwordFlag = False
         photo = GetData.getData(self, request, 'photo', File=True)
+        photoFlag = True
+        if not photo: 
+            photoFlag = False
         department = request.data['department']
         batch = int(request.data['batch'])
         rait_email = request.data['rait_email']
@@ -63,14 +67,16 @@ class AddStudent(APIView):
                 student.github = github
                 student.linkedin = linkedin
                 student.no_of_offers = no_of_offers
-                student.photo = photo
                 student.department = department
                 student.batch = batch
                 student.rait_email = rait_email
-                update_fields = ['first_name', 'middle_name', 'last_name', 'email', 'phone_number', 'gender', 'github', 'linkedin', 'no_of_offers', 'photo', 'department', 'batch', 'rait_email']
-                if flag == True:
-                    student.password = password
+                update_fields = ['first_name', 'middle_name', 'last_name', 'email', 'phone_number', 'gender', 'github', 'linkedin', 'no_of_offers', 'department', 'batch', 'rait_email']
+                if passwordFlag:
+                    student.password = make_password(password)
                     update_fields.append('password')
+                if photoFlag:
+                    student.photo = photo
+                    update_fields.append('photo')
                 student.save(update_fields=update_fields)
                 context = {'status': 'Student Record Updated'}
             else:
@@ -383,20 +389,29 @@ class AddExperience(APIView):
 
 
 class AddPlacementDetails(APIView):
+    
+    def setOfferFlag(self, offer_letter):
+        flag = True
+        if not offer_letter:
+            flag = False
+        return flag
 
     def post(self, request):
         user_roll_no = request.data['roll_no'].strip()
         offer_letter_one = GetData.getData(self, request, 'offer_letter_one', File=True)
+        offer_letter_one_flag = self.setOfferFlag(offer_letter_one)
         offer_letter_two = GetData.getData(self, request, 'offer_letter_two', File=True)
+        offer_letter_two_flag = self.setOfferFlag(offer_letter_two)
         offer_letter_three = GetData.getData(self, request, 'offer_letter_three', File=True)
+        offer_letter_three_flag = self.setOfferFlag(offer_letter_three)
         placed_org_one = GetData.getData(self, request, 'placed_org_one')
         placed_org_two = GetData.getData(self, request, 'placed_org_two')
         placed_org_three = GetData.getData(self, request, 'placed_org_three')
-        package_one = GetData.getData(self, request, 'package_one', Decimal=True)
-        package_two = GetData.getData(self, request, 'package_two', Decimal=True)
-        package_three = GetData.getData(self, request, 'package_three', Decimal=True)
+        package_one = GetData.getData(self, request, 'package_one')
+        package_two = GetData.getData(self, request, 'package_two')
+        package_three = GetData.getData(self, request, 'package_three')
         placed_company = GetData.getData(self, request, 'placed_company')
-        placed_package = GetData.getData(self, request, 'placed_package', Decimal=True)
+        placed_package = GetData.getData(self, request, 'placed_package')
         jwt_roll_no = request.user.roll_no.strip()
         userRecord = Student.objects.get(roll_no=jwt_roll_no)
         status = 200
@@ -408,9 +423,6 @@ class AddPlacementDetails(APIView):
                 except Exception as e:
                     return Response({'status': 'Student does not exist', 'error_msg': str(e)}, status=500)
                 placementRecord = PlacementDetails.objects.get(student=student)
-                placementRecord.offer_letter_one = offer_letter_one
-                placementRecord.offer_letter_two = offer_letter_two
-                placementRecord.offer_letter_three = offer_letter_three
                 placementRecord.placed_org_one = placed_org_one
                 placementRecord.placed_org_two = placed_org_two
                 placementRecord.placed_org_three = placed_org_three
@@ -419,7 +431,17 @@ class AddPlacementDetails(APIView):
                 placementRecord.package_three = package_three
                 placementRecord.placed_company = placed_company
                 placementRecord.placed_package = placed_package
-                placementRecord.save(update_fields=['offer_letter_one', 'offer_letter_two', 'offer_letter_three', 'placed_org_one', 'placed_org_two', 'placed_org_three', 'package_one', 'package_two', 'package_three', 'placed_company', 'placed_package'])
+                update_fields = ['placed_org_one', 'placed_org_two', 'placed_org_three', 'package_one', 'package_two', 'package_three', 'placed_company', 'placed_package']
+                if offer_letter_one_flag:
+                    placementRecord.offer_letter_one = offer_letter_one
+                    update_fields.append('offer_letter_one')
+                if offer_letter_two_flag:
+                    placementRecord.offer_letter_two = offer_letter_two
+                    update_fields.append('offer_letter_two')
+                if offer_letter_three_flag:
+                    placementRecord.offer_letter_three = offer_letter_three
+                    update_fields.append('offer_letter_three')
+                placementRecord.save(update_fields=update_fields)
                 context = {'status': 'Placement Record Updated'}
             else:
                 context = {'status': 'Error', 'message': 'Insufficient Permissions to perform the request'}

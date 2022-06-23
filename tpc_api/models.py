@@ -235,12 +235,12 @@ class PlacementDetails(models.Model):
     placed_org_two = models.CharField(max_length=100, null=True, blank=True)
     placed_org_three = models.CharField(max_length=100, null=True, blank=True)
     # Packages Options
-    package_one = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
-    package_two = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
-    package_three = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
+    package_one = models.CharField(max_length=50, null=True, blank=True)
+    package_two = models.CharField(max_length=50, null=True, blank=True)
+    package_three = models.CharField(max_length=50, null=True, blank=True)
     # Selected Organization
     placed_company = models.CharField(max_length=50, null=True, blank=True)
-    placed_package = models.DecimalField(max_digits=12, decimal_places=4, null=True, blank=True)
+    placed_package = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.student.roll_no

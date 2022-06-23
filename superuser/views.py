@@ -46,15 +46,16 @@ class AddPlacedStudents(APIView):
         if userRecord.groups.filter(name='Superuser'):
             excelFile = request.FILES['excelFile']
             df = pd.read_excel(excelFile, engine='openpyxl').fillna('')
-            studentData = df[['roll_no', 'company']]
+            studentData = df[['roll_no', 'company', 'package']]
             moreThanThreeCompaniesRows = []         # List to store student rows with more than 3 companies
             studentNotExistsRows = []               # List to store student rows with no record in Student table
             emptyValueRows = []                     # List to store student rows with empty values in columns
 
             for row in range(0, len(studentData)):
-                if studentData.iloc[row]['roll_no'] != '' and studentData.iloc[row]['company'] != '':
+                if studentData.iloc[row]['roll_no'] != '' and studentData.iloc[row]['company'] != '' and studentData.iloc[row]['package'] != '':
                     roll_no = studentData.iloc[row]['roll_no']
                     company_name = studentData.iloc[row]['company']
+                    package = studentData.iloc[row]['package']
 
                     try:
                         student = Student.objects.get(roll_no=roll_no)
@@ -62,17 +63,20 @@ class AddPlacedStudents(APIView):
                             studentPlacementDetails = PlacementDetails.objects.get(student=student)
                             if studentPlacementDetails.placed_org_one == None or studentPlacementDetails.placed_org_two == '':
                                 studentPlacementDetails.placed_org_one = company_name
-                                studentPlacementDetails.save(update_fields=['placed_org_one'])
+                                studentPlacementDetails.package_one = package
+                                studentPlacementDetails.save(update_fields=['placed_org_one', 'package_one'])
                             elif studentPlacementDetails.placed_org_two == None or studentPlacementDetails.placed_org_two == '':
                                 studentPlacementDetails.placed_org_two = company_name
-                                studentPlacementDetails.save(update_fields=['placed_org_two'])
+                                studentPlacementDetails.package_two = package
+                                studentPlacementDetails.save(update_fields=['placed_org_two', 'package_two'])
                             elif studentPlacementDetails.placed_org_three == None or studentPlacementDetails.placed_org_three == '':
                                 studentPlacementDetails.placed_org_three = company_name
-                                studentPlacementDetails.save(update_fields=['placed_org_three'])
+                                studentPlacementDetails.package_three = package
+                                studentPlacementDetails.save(update_fields=['placed_org_three', 'package_three'])
                             else:
                                 moreThanThreeCompaniesRows.append(row+2)
                         except:
-                            PlacementDetails.objects.create(student=student, placed_org_one=company_name)
+                            PlacementDetails.objects.create(student=student, placed_org_one=company_name, package_one=package)
                     except:
                         studentNotExistsRows.append(row+2)
                 else:
