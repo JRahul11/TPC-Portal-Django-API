@@ -2,12 +2,42 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
+DEV_MODE = True
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-2!dzk-vaq$_(pr(y9!%4e_-^+24)k6po$wbl$9_v0orovv=f&9'
 DEBUG = True
 ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
+
+if DEV_MODE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'tpc_database',
+            'USER': 'root',  # Change this to your username
+            'PASSWORD': 'abc456',  # Change this to your password
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'tpc_database',
+            'USER': 'tpcadmin',  # Change this to your username
+            'PASSWORD': 'tpcadmin',  # Change this to your password
+            'HOST': 'tpc-database.cvr5t5yxt7tj.us-east-1.rds.amazonaws.com',
+            'PORT': '3306',
+        }
+    }
+    SECURE_HSTS_SECONDS = 15768000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
 
 
 INSTALLED_APPS = [
@@ -31,7 +61,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    "django_permissions_policy.PermissionsPolicyMiddleware",
     'csp.middleware.CSPMiddleware',
+    'django_referrer_policy.middleware.ReferrerPolicyMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,7 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'tpc_portal.wsgi.application'
 
 CORS_ORIGIN_ALLOW_ALL = True
-
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -78,31 +109,8 @@ CORS_ALLOW_HEADERS = [
     'access-control-allow-headers',
 ]
 
-# Local Machine Configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tpc_database',
-        'USER': 'root',  # Change this to your username
-        'PASSWORD': 'abc456',  # Change this to your password
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
-}
 
-# AWS Configuration
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'tpc_database',
-#         'USER': 'tpcadmin',  # Change this to your username
-#         'PASSWORD': 'tpcadmin',  # Change this to your password
-#         'HOST': 'tpc-database.cvr5t5yxt7tj.us-east-1.rds.amazonaws.com',
-#         'PORT': '3306',
-#     }
-# }
-
-
+# Default Permission and Authentication
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -113,6 +121,7 @@ REST_FRAMEWORK = {
 }
 
 
+# JWT Configuration
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -146,6 +155,36 @@ SIMPLE_JWT = {
 }
 
 
+# Security Policies
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+REFERRER_POLICY = 'same-origin'
+CSP_DEFAULT_SRC = ("'none'")
+CSP_STYLE_SRC = ("'self'")
+CSP_SCRIPT_SRC = ("'self'")
+CSP_FONT_SRC = ("'self'", )
+CSP_IMG_SRC = ("'self'")
+CSP_MEDIA_SRC = ("'self'")
+PERMISSIONS_POLICY = {
+    "accelerometer": [],
+    "ambient-light-sensor": [],
+    "autoplay": [],
+    "camera": [],
+    "display-capture": [],
+    "document-domain": [],
+    "encrypted-media": [],
+    "fullscreen": [],
+    "geolocation": [],
+    "gyroscope": [],
+    "interest-cohort": [],
+    "magnetometer": [],
+    "microphone": [],
+    "midi": [],
+    "payment": [],
+    "usb": [],
+}
+
 AUTH_USER_MODEL = 'tpc_api.Student'
 
 
@@ -172,20 +211,14 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Static and Media Files Path
 STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# API Logging
 DRF_API_LOGGER_DATABASE = True
-
-
-CSP_DEFAULT_SRC = ["'none'"]
-CSP_STYLE_SRC = ("'self'")
-CSP_SCRIPT_SRC = ("'self'")
-CSP_FONT_SRC = ("'self'", )
-CSP_IMG_SRC = ("'self'")
-CSP_MEDIA_SRC = ("'self'")
