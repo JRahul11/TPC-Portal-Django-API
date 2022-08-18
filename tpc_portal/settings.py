@@ -25,8 +25,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'tpc_database',
-            'USER': 'tpcadmin',  # Change this to your username
-            'PASSWORD': 'tpcadmin',  # Change this to your password
+            'USER': 'tpcadmin',
+            'PASSWORD': 'tpcadmin',
             'HOST': 'tpc-database.cvr5t5yxt7tj.us-east-1.rds.amazonaws.com',
             'PORT': '3306',
         }
@@ -54,14 +54,13 @@ INSTALLED_APPS = [
     'tpc_api',
     'node_api',
     'superuser',
-    'company',
-    'django_cleanup.apps.CleanupConfig',
+    'company'
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    "django_permissions_policy.PermissionsPolicyMiddleware",
+    'django_permissions_policy.PermissionsPolicyMiddleware',
     'csp.middleware.CSPMiddleware',
     'django_referrer_policy.middleware.ReferrerPolicyMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
