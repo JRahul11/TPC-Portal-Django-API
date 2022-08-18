@@ -1,15 +1,17 @@
 import os
+import environ
+env = environ.Env()
+environ.Env.read_env()
 from pathlib import Path
 from datetime import timedelta
 
 DEV_MODE = True
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-2!dzk-vaq$_(pr(y9!%4e_-^+24)k6po$wbl$9_v0orovv=f&9'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
-
 if DEV_MODE:
+    SECRET_KEY = 'django-insecure-2!dzk-vaq$_(pr(y9!%4e_-^+24)k6po$wbl$9_v0orovv=f&9'
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    DEBUG = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -21,13 +23,16 @@ if DEV_MODE:
         }
     }
 else:
+    SECRET_KEY = env('SECRET_KEY')
+    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+    DEBUG = env('DEBUG')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'tpc_database',
-            'USER': 'tpcadmin',
-            'PASSWORD': 'tpcadmin',
-            'HOST': 'tpc-database.cvr5t5yxt7tj.us-east-1.rds.amazonaws.com',
+            'NAME': env('DATABASE_NAME'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('DATABASE_PASS'),
+            'HOST': env('DATABASE_HOST'),
             'PORT': '3306',
         }
     }
@@ -49,7 +54,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'drf_api_logger',
     'auth_api',
     'tpc_api',
     'node_api',
@@ -69,8 +73,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'tpc_portal.urls'
@@ -218,6 +221,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# API Logging
-DRF_API_LOGGER_DATABASE = True
